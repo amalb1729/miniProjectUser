@@ -1,0 +1,63 @@
+header {
+
+    display: flex;
+    align-items: center;
+}
+
+.accbtn{
+    border-radius: 10px;
+    border: none;
+    font-size: 1.2em;
+    padding: 5px;
+    margin: 5px;
+}
+
+#login{
+   background-color: hsl(181, 56%, 58%);
+   color: white;
+}
+
+#signup{
+    background-color: antiquewhite;
+    color: black;
+}
+.account{
+    margin-left: auto;
+}
+
+nav{
+    display: flex;
+    justify-content: space-around;
+    background-color: green;
+    border-radius: 5px;
+}
+
+a{
+    padding: 5px;
+    
+}
+
+footer{
+    background-color: rgb(44, 66, 42);
+    position: fixed;
+    bottom:0px;
+    width: 100%;
+}
+
+html,body{
+    margin: 0px;
+    padding-top: 10vh;
+    padding-bottom: 4vh;
+}
+
+.test{
+    height: 1000px;
+    background-color: rgb(83, 158, 96);
+
+}
+
+.head{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
