@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 
 sdsdfs
+=======
+sdfsdfsdfsdfsfsdfsd
+
+>>>>>>> master
 function App() {
 
 
