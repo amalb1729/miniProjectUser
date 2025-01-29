@@ -1,5 +1,4 @@
 header {
-
     display: flex;
     align-items: center;
 }
@@ -60,10 +59,11 @@ html,body{
     position: fixed;
     top: 0px;
     width: 100%;
+    background-color: aquamarine;
 }
 
 .card{
-    background-color: blue;
+    background-color: antiquewhite;
     padding:10px;
     display:flex;
     flex-direction: column;
@@ -72,6 +72,7 @@ html,body{
     border-radius: 10px;
     margin-top: 5%;
     margin-right: 2%;
+    box-shadow: 5px 5px 10px;
 }
 
 .card h3{
@@ -80,7 +81,6 @@ html,body{
 
 
 .cardContainer{
-    background-color: brown;
     display: flex;
     flex-wrap: wrap;
     width: 90%;
@@ -94,7 +94,9 @@ html,body{
 
 .bookBtn{
     border-radius: 10px;
+    color: blue;
     border: none;
+    font-size: large;
 }
 
 button:hover{
@@ -109,9 +111,10 @@ button:hover{
     align-items: center;
     background-color: antiquewhite;
     border-radius: 10px;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 15%;
+    margin-right: 15%;
     margin-top: 10px;
+    box-shadow: 5px 5px 10px;
 }
 
 .fileInput{
@@ -138,7 +141,7 @@ option{
 }
 
 select{
-    background-color: red;
+    background-color: rgb(188, 141, 141);
 }
 
 .printPreferences{
@@ -150,9 +153,10 @@ select{
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
-    background-color: darkolivegreen;
+    background-color: antiquewhite;
     border-radius: 10px;
     padding: 20px;
+    box-shadow: 5px 5px 10px;
 }
 
 
@@ -170,6 +174,12 @@ select{
         width: 30%;
     }
 
+    .profileDetails{
+        width:20%
+    }
+    .profieQr{
+        width: 20%;
+    }
     
 }
 
@@ -177,7 +187,7 @@ select{
 
     .fileInputContainer{
 
-        width: 90%;
+        width: 70%;
 
     }
 
@@ -185,4 +195,45 @@ select{
         width: 50%;
     }
 
+    .profileDetails{
+        width: 60%;
+    }
+
+    .profieQr{
+        width: 60%;
+    }
+
+}
+
+.profileDetails{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15%;
+    margin-right: 10%;
+    text-align: center;
+    margin-top: 10px;
+    padding: 15px;
+    background-color: antiquewhite;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px;
+}
+
+.profieQr{
+
+    display: flex;
+    flex-direction: column;
+    margin-left: 15%;
+    margin-right: 10%;
+    text-align: center;
+    margin-top: 10px;
+    padding: 15px;
+    background-color: antiquewhite;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px;
+    
+}
+
+.profile{
+    display: flex;
+    flex-wrap: wrap;
 }

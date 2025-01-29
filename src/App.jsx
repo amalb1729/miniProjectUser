@@ -4,6 +4,7 @@ import Footer from "./Footer"
 import Test from "./test"
 import Store from "./storebook"
 import Filein from "./Filein"
+import Profile from "./Profile"
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
     <>
       <Header />
 
-      <Filein />
+      <Store />
 
       <Footer />
 
