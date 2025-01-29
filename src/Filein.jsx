@@ -2,6 +2,8 @@ import { createRef } from "react";
 import { use } from "react";
 import { useState } from "react"
 
+// print range to be added
+
 function Filein(){
 
 
@@ -38,12 +40,9 @@ function Filein(){
                         <h2>Upload your file</h2>
                         <input type="file" id="fileInput" style={{display:'none'}} onChange={handleChange}/>
                         {file?(<p>{file.name}</p>):(<label htmlFor="fileInput"  className="fileInput">Choose Your File</label>)}
+                        {file && (<label htmlFor="fileInput"  className="fileInput">Change file</label>)}
                         <button type="button" className="fileupload" ref={uploadRef} disabled>upload</button>
                 </div>
-
-
-
-
 
                 <div className="printPreferences">
                     <h2>Print Preferences</h2>
