@@ -69,12 +69,6 @@ select{
         width: 30%;
     }
 
-    .profileDetails{
-        width:20%
-    }
-    .profieQr{
-        width: 20%;
-    }
     
 }
 
@@ -90,12 +84,5 @@ select{
         width: 50%;
     }
 
-    .profileDetails{
-        width: 60%;
-    }
-
-    .profieQr{
-        width: 60%;
-    }
 
 }

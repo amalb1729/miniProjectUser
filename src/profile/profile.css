@@ -30,3 +30,25 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+@media (min-width: 480px) {
+    .profileDetails{
+        width:20%
+    }
+    .profieQr{
+        width: 20%;
+    }
+    
+}
+
+@media (max-width: 480px){
+
+    .profileDetails{
+        width: 60%;
+    }
+
+    .profieQr{
+        width: 60%;
+    }
+
+}
