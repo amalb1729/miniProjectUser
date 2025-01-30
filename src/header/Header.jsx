@@ -1,28 +1,29 @@
+import { NavLink } from 'react-router-dom';
+import './header.css';
 
-import { NavLink } from 'react-router-dom'
-import './header.css'
-function Header(){
-
-    return(
+function Header() {
+    return (
         <>
-        <div className="head"> 
-            <header>
-                <h1>Store</h1>
-                <div className="account">
-                    <button type="button" className="accbtn" id="signup">Sign up</button>
-                    <button type="button" className="accbtn" id="login">Login</button>
-                </div>
-            </header>
-            <hr></hr>
-            <nav>
-                <NavLink to="/" className={(e)=>{return e.isActive?"act":"inact"}} ><li>Home</li></NavLink >
-                <NavLink to="/Book" className={(e)=>{return e.isActive?"act":"inact"}}><li>Book Now</li></NavLink >
-                <NavLink to="/Print" className={(e)=>{return e.isActive?"act":"inact"}}><li>Print me</li></NavLink >
-                <NavLink to="/Profile" className={(e)=>{return e.isActive?"act":"inact"}}><li>Profile</li></NavLink >
-            </nav>
-        </div>
+            <div className="head">
+                <header>
+                    <h1 className="logo">Store</h1>
+                    <div className="account">
+                        <button type="button" className="accbtn signup">Sign up</button>
+                        <button type="button" className="accbtn login">Login</button>
+                    </div>
+                </header>
+                <hr />
+                <nav>
+                    <ul className="nav-list">
+                        <li><NavLink to="/" className={({ isActive }) => isActive ? "act" : "inact"}>Home</NavLink></li>
+                        <li><NavLink to="/Book" className={({ isActive }) => isActive ? "act" : "inact"}>Book Now</NavLink></li>
+                        <li><NavLink to="/Print" className={({ isActive }) => isActive ? "act" : "inact"}>Print Me</NavLink></li>
+                        <li><NavLink to="/Profile" className={({ isActive }) => isActive ? "act" : "inact"}>Profile</NavLink></li>
+                    </ul>
+                </nav>
+            </div>
         </>
-    )
+    );
 }
 
-export default Header
+export default Header;
