@@ -6,19 +6,26 @@ import Store from "./store/storebook"
 import Filein from "./print/Filein"
 import Profile from "./profile/Profile"
 import Home from "./home/home"
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
 
-
+  
   return (
-    <>
 
+    <>
       <div className="app">
         <Header />
 
           <div className="content">
-            <Filein />
+              
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/book" element={<Store />} />
+            <Route path="/print" element={<Filein />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+          
           </div>
           
         <Footer />

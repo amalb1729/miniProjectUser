@@ -18,7 +18,7 @@ function Store(){
         <div className="cardContainer">
 
             {items.map((item,index)=>(
-            <div className="card" >
+            <div className="card" key={index}>
                     <img src="https://placehold.co/100"></img>
                     <h3>{item.name}</h3>
                     <p>{item.price}</p>
