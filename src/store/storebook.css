@@ -1,43 +1,75 @@
-
-.card{
-    background-color: antiquewhite;
-    padding:10px;
-    display:flex;
-    flex-direction: column;
-    text-align: center;
-    width: 150px;
-    border-radius: 10px;
-    margin-top: 5%;
-    margin-right: 2%;
-    box-shadow: 5px 5px 10px;
-
-}
-
-.card:hover{
-    transform: scale(1.05); /* Slight zoom-in effect */
-    transition: transform 0.3s ease-in-out; /* Smooth transition */
-}
-
-.card h3{
-    flex-grow: 1;
-}
-
-
-.cardContainer{
+/* Card container that wraps around the individual cards */
+.cardContainer {
     display: flex;
     flex-wrap: wrap;
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    height:100%;
     justify-content: space-evenly;
+    margin: 20px auto;
+    width: 90%;
     padding-top: 10px;
     padding-bottom: 10px;
-}
-
-.bookBtn{
+    gap: 15px; /* Adds space between the cards */
+  }
+  
+  /* Individual card styling */
+  .card {
+    background-color: #ffffff; /* Light card background */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 150px;
+    border-radius: 12px; /* Slightly rounder corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card img {
+    border-radius: 8px; /* Round image corners */
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Slight zoom-in effect */
+  }
+  
+  /* Heading style */
+  .card h3 {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333; /* Darker text for better readability */
+    margin-bottom: 5px;
+    flex-grow: 1;
+  }
+  
+  /* Price text */
+  .card p {
+    color: #28a745; /* Green to highlight the price */
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+  
+  /* Book button styling */
+  .bookBtn {
+    background-color: #007bff; /* Blue background */
+    color: white;
     border-radius: 10px;
-    color: blue;
     border: none;
-    font-size: large;
-}
+    padding: 10px 20px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    width: 100%; /* Full width of the card */
+  }
+  
+  .bookBtn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .bookBtn:focus {
+    outline: none; /* Remove focus outline for cleaner look */
+  }
+  
