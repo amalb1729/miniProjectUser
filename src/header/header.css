@@ -1,0 +1,44 @@
+header {
+    display: flex;
+    align-items: center;
+}
+
+.accbtn{
+    border-radius: 10px;
+    border: none;
+    font-size: 1.2em;
+    padding: 5px;
+    margin: 5px;
+}
+
+#login{
+   background-color: hsl(181, 56%, 58%);
+   color: white;
+}
+
+#signup{
+    background-color: antiquewhite;
+    color: black;
+}
+.account{
+    margin-left: auto;
+}
+
+nav{
+    display: flex;
+    justify-content: space-around;
+    background-color: green;
+    border-radius: 5px;
+
+    border: 5px solid transparent;
+}
+
+a{
+    padding: 5px;
+    
+}
+
+.head{
+    width: 100%;
+    background-color: aquamarine;
+}

@@ -1,6 +1,6 @@
-import Card from "./card"   
 
 
+import "./storebook.css"
 
 function Store(){
 

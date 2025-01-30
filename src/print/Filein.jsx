@@ -1,11 +1,10 @@
 import { createRef } from "react";
 import { use } from "react";
 import { useState } from "react"
-
+import "./filein.css"
 // print range to be added
 
 function Filein(){
-
 
     const [file,setFile]=useState(null);
     const [status,setStatus]=useState('idle ')

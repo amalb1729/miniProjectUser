@@ -1,53 +1,18 @@
-header {
-    display: flex;
-    align-items: center;
-}
 
-.accbtn{
-    border-radius: 10px;
-    border: none;
-    font-size: 1.2em;
-    padding: 5px;
-    margin: 5px;
-}
-
-#login{
-   background-color: hsl(181, 56%, 58%);
-   color: white;
-}
-
-#signup{
-    background-color: antiquewhite;
-    color: black;
-}
-.account{
-    margin-left: auto;
-}
-
-nav{
-    display: flex;
-    justify-content: space-around;
-    background-color: green;
-    border-radius: 5px;
-}
-
-a{
-    padding: 5px;
-    
-}
-
-footer{
-    background-color: rgb(44, 66, 42);
-    position: fixed;
-    bottom:0px;
-    width: 100%;
-}
-
-html,body{
+body{
     margin: 0px;
-    padding-top: 10vh;
-    padding-bottom: 4vh;
+    ;
 }
+
+.app{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh
+}
+.content{
+    flex-grow: 1;
+}
+
 
 .test{
     height: 1000px;
@@ -55,185 +20,11 @@ html,body{
 
 }
 
-.head{
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    background-color: aquamarine;
-}
 
-.card{
-    background-color: antiquewhite;
-    padding:10px;
-    display:flex;
-    flex-direction: column;
-    text-align: center;
-    width: 150px;
-    border-radius: 10px;
-    margin-top: 5%;
-    margin-right: 2%;
-    box-shadow: 5px 5px 10px;
-}
-
-.card h3{
-    flex-grow: 1;
-}
-
-
-.cardContainer{
-    display: flex;
-    flex-wrap: wrap;
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    height:100%;
-    justify-content: space-evenly;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.bookBtn{
-    border-radius: 10px;
-    color: blue;
-    border: none;
-    font-size: large;
-}
 
 button:hover{
     cursor:pointer;
 }
 
-.fileInputContainer{
-
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: antiquewhite;
-    border-radius: 10px;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-top: 10px;
-    box-shadow: 5px 5px 10px;
-}
-
-.fileInput{
-    background-color: aqua;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.fileupload{
-    background-color: rgb(38, 165, 85);
-    padding: 10px;
-    border-radius: 10px;
-    margin-top: 10px;
-    border: none;
-}
-
-.printContainer{
-    display:flex;
-    flex-wrap: wrap;
-}
-
-option{
-    background-color: aqua;
-}
-
-select{
-    background-color: rgb(188, 141, 141);
-}
-
-.printPreferences{
 
 
-    display: flex;
-    flex-direction: column;
-    justify-content:center; 
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    background-color: antiquewhite;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 5px 5px 10px;
-}
-
-
-/*changes to be made to width of elements using @media query*/
-
-@media (min-width: 480px) {
-
-    .fileInputContainer{
-
-        width: 30%;
-
-    }
-
-    .printPreferences{
-        width: 30%;
-    }
-
-    .profileDetails{
-        width:20%
-    }
-    .profieQr{
-        width: 20%;
-    }
-    
-}
-
-@media (max-width: 480px){
-
-    .fileInputContainer{
-
-        width: 70%;
-
-    }
-
-    .printPreferences{
-        width: 50%;
-    }
-
-    .profileDetails{
-        width: 60%;
-    }
-
-    .profieQr{
-        width: 60%;
-    }
-
-}
-
-.profileDetails{
-    display: flex;
-    flex-direction: column;
-    margin-left: 15%;
-    margin-right: 10%;
-    text-align: center;
-    margin-top: 10px;
-    padding: 15px;
-    background-color: antiquewhite;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px;
-}
-
-.profieQr{
-
-    display: flex;
-    flex-direction: column;
-    margin-left: 15%;
-    margin-right: 10%;
-    text-align: center;
-    margin-top: 10px;
-    padding: 15px;
-    background-color: antiquewhite;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px;
-    
-}
-
-.profile{
-    display: flex;
-    flex-wrap: wrap;
-}
