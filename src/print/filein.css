@@ -1,88 +1,113 @@
-.fileInputContainer{
-
-    display:flex;
+/* Container for file input */
+.fileInputContainer {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: antiquewhite;
+    background-color: #f8f9fa; /* Light grey */
     border-radius: 10px;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-top: 10px;
-    box-shadow: 5px 5px 10px;
-}
+    margin: 15px auto;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+  }
 
-.fileInput{
-    background-color: aqua;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.fileupload{
-    background-color: rgb(38, 165, 85);
-    padding: 10px;
-    border-radius: 10px;
+  
+  
+  /* File input label style */
+  .fileInput {
+    background-color: #007bff; /* Primary Blue */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .fileInput:hover {
+    background-color: #0056b3; /* Darker Blue on hover */
+  }
+  
+  /* Upload button style */
+  .fileupload {
+    background-color: #28a745; /* Green */
+    padding: 12px 20px;
+    border-radius: 5px;
     margin-top: 10px;
     border: none;
-}
-
-.printContainer{
-    display:flex;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .fileupload:disabled {
+    background-color: #ccc; /* Grey when disabled */
+    cursor: not-allowed;
+  }
+  
+  .fileupload:hover {
+    background-color: #218838; /* Darker Green on hover */
+  }
+  
+  /* Container for print preferences */
+  .printContainer {
+    display: flex;
     flex-wrap: wrap;
-}
-
-option{
-    background-color: aqua;
-}
-
-select{
-    background-color: rgb(188, 141, 141);
-}
-
-.printPreferences{
-
-
+    justify-content: center;
+  }
+  
+  /* Style for select options */
+  option {
+    background-color: #007bff; /* Blue */
+    color: white;
+  }
+  
+  select {
+    background-color: #f1f1f1; /* Light grey for dropdown */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc; /* Light border */
+  }
+  
+  /* Container for print preferences section */
+  .printPreferences {
     display: flex;
     flex-direction: column;
-    justify-content:center; 
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    background-color: antiquewhite;
+    justify-content: center;
+    margin: 20px auto;
+    background-color: #f8f9fa;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 5px 5px 10px;
-}
-
-
-/*changes to be made to width of elements using @media query*/
-
-@media (min-width: 480px) {
-
-    .fileInputContainer{
-
-        width: 30%;
-
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    width: 80%;
+  }
+  
+  /* Header styles */
+  h2 {
+    color: #343a40; /* Dark Grey */
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Responsive styling for larger screens */
+  @media (min-width: 480px) {
+    .fileInputContainer {
+      width: 30%;
     }
-
-    .printPreferences{
-        width: 30%;
+  
+    .printPreferences {
+      width: 40%;
     }
-
-    
-}
-
-@media (max-width: 480px){
-
-    .fileInputContainer{
-
-        width: 70%;
-
+  }
+  
+  /* Responsive styling for smaller screens */
+  @media (max-width: 480px) {
+    .fileInputContainer {
+      width: 70%;
     }
-
-    .printPreferences{
-        width: 50%;
+  
+    .printPreferences {
+      width: 80%;
     }
-
-
-}
+  }
+  
