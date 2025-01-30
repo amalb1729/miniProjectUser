@@ -62,7 +62,7 @@
   /* Responsive styling for larger screens */
   @media (min-width: 480px) {
     .profile {
-      width: 50%;
+      width: 80%;
     }
   }
   
@@ -70,7 +70,7 @@
   @media (max-width: 480px) {
     .profile {
       flex-direction: column;
-      width: 90%;
+      width: 80%;
     }
   
     .profileDetails,

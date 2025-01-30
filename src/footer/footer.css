@@ -4,9 +4,6 @@ footer {
     width: 100%;
     height: 60px; /* Increased height for better visual appeal */
     padding: 15px 0; /* Padding for spacing */
-    position: fixed;
-    bottom: 0;
-    left: 0;
     text-align: center; /* Centered content */
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
   }
