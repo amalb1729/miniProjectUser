@@ -1,54 +1,82 @@
-.profileDetails{
+/* Container for profile section */
+.profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    background-color: #f8f9fa; /* Light grey background */
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 80%;
+  }
+  
+  /* Profile details section */
+  .profileDetails {
     display: flex;
     flex-direction: column;
-    margin-left: 15%;
-    margin-right: 10%;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin-top: 10px;
-    padding: 15px;
-    background-color: antiquewhite;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px;
-}
-
-.profieQr{
-
+    width: 50%; /* Half-width */
+    padding: 20px;
+  }
+  
+  .profileDetails img {
+    border-radius: 50%;
+    margin-bottom: 15px;
+    width: 100px;
+    height: 100px;
+  }
+  
+  /* Profile text */
+  .profileDetails p {
+    font-size: 1.1em;
+    color: #343a40; /* Dark Grey */
+    margin: 8px 0;
+  }
+  
+  /* QR Code section */
+  .profieQr {
     display: flex;
     flex-direction: column;
-    margin-left: 15%;
-    margin-right: 10%;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin-top: 10px;
-    padding: 15px;
-    background-color: antiquewhite;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px;
-    
-}
-
-.profile{
-    display: flex;
-    flex-wrap: wrap;
-}
-
-@media (min-width: 480px) {
-    .profileDetails{
-        width:20%
+    width: 50%;
+    padding: 20px;
+  }
+  
+  .profieQr h2 {
+    color: #28a745; /* Green for QR Code header */
+    margin-bottom: 15px;
+  }
+  
+  .profieQr img {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  /* Responsive styling for larger screens */
+  @media (min-width: 480px) {
+    .profile {
+      width: 50%;
     }
-    .profieQr{
-        width: 20%;
+  }
+  
+  /* Responsive styling for smaller screens */
+  @media (max-width: 480px) {
+    .profile {
+      flex-direction: column;
+      width: 90%;
     }
-    
-}
-
-@media (max-width: 480px){
-
-    .profileDetails{
-        width: 60%;
+  
+    .profileDetails,
+    .profieQr {
+      width: 100%;
+      margin-bottom: 20px;
     }
-
-    .profieQr{
-        width: 60%;
-    }
-
-}
+  }
+  
