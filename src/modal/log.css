@@ -1,0 +1,49 @@
+/* Modal content styling */
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
+}
+
+/* Headings */
+.modalContent h2 {
+    margin-bottom: 15px;
+    color: #333; /* Dark text for better contrast */
+}
+
+/* Input fields */
+.modalContent input {
+    width: 90%;
+    padding: 12px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Focus effect on input */
+.modalContent input:focus {
+    border-color: #007bff; /* Highlight input on focus */
+}
+
+/* Submit button */
+.submit {
+    width: 95%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.submit:hover {
+    background-color: #0056b3;
+}

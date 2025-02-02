@@ -1,15 +1,22 @@
 import { NavLink } from 'react-router-dom';
 import './header.css';
+import { useContext } from 'react';
+import { myContext } from '../App';
+
+
 
 function Header() {
+
+    const {setLoginOpen,setSignupOpen}=useContext(myContext)
+    
     return (
         <>
             <div className="head">
                 <header>
                     <h1 className="logo">Store</h1>
                     <div className="account">
-                        <button type="button" className="accbtn signup">Sign up</button>
-                        <button type="button" className="accbtn login">Login</button>
+                        <button type="button" className="accbtn signup" onClick={() => setSignupOpen(true)}>Sign up</button>
+                        <button type="button" className="accbtn login" onClick={() => setLoginOpen(true)} >Login</button>
                     </div>
                 </header>
                 <hr />

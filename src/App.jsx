@@ -7,14 +7,30 @@ import Filein from "./print/Filein"
 import Profile from "./profile/Profile"
 import Home from "./home/home"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { createContext } from "react"
+import { useState } from "react"
+
+import Loginmodal from "./modal/loginmodal"
+import Signupmodal from "./modal/signupmodal"
+
+
+export const myContext=createContext();
 
 function App() {
 
   
+  const [isLoginOpen, setLoginOpen] = useState(false);
+  const [isSignupOpen, setSignupOpen] = useState(false);
+  
+  
   return (
 
     <>
+      
       <div className="app">
+      
+      <myContext.Provider value={{isSignupOpen, setSignupOpen,isLoginOpen, setLoginOpen}}>
+
         <Header />
 
           <div className="content">
@@ -24,12 +40,21 @@ function App() {
             <Route path="/book" element={<Store />} />
             <Route path="/print" element={<Filein />} />
             <Route path="/profile" element={<Profile />} />
+
           </Routes>
           
           </div>
           
+
         <Footer />
+
+        <Loginmodal />
+        <Signupmodal />
+      </myContext.Provider>  
+
       </div>
+
+        
     </>
   )
 }
