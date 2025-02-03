@@ -18,6 +18,7 @@ function Loginmodal(){
             setTimeout(()=>{
                 setLoggedIn(true)
                 setLoginOpen(false)
+                setMessage(null);
             },2000)
         }
         else {
@@ -31,7 +32,7 @@ function Loginmodal(){
 
 
     return(
-    <Modal isOpen={isLoginOpen} closeModal={() => setLoginOpen(false)}>
+    <Modal isOpen={isLoginOpen} closeModal={() => {setLoginOpen(false);setMessage(null);}}>
         <div className="modalContent">
             <h2>Login</h2>
             <input type="text" placeholder="Username" ref={userRef}/>
