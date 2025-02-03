@@ -29,21 +29,61 @@
     border-color: #007bff; /* Highlight input on focus */
 }
 
-/* Submit button */
-.submit {
-    width: 95%;
-    padding: 12px;
+
+
+/* Button container */
+.options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Evenly distribute buttons */
+    width: 100%;
     margin-top: 10px;
-    font-size: 1.1rem;
-    background-color: #007bff;
-    color: white;
+    gap: 10px; /* Space between buttons */
+}
+
+/* General button styling */
+.options button {
+    flex: 1; /* Make buttons equally sized */
+    padding: 12px;
+    font-size: 1rem;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease-in-out;
 }
 
-/* Button hover effect */
+/* Primary buttons */
+.submit {
+    background-color: #007bff;
+    color: white;
+}
+
 .submit:hover {
     background-color: #0056b3;
+}
+
+/* Secondary buttons */
+.options button:not(.submit) {
+    background-color: #f1f1f1; /* Light gray */
+    color: #333;
+}
+
+.options button:not(.submit):hover {
+    background-color: #ddd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .options {
+        flex-direction: column;
+        gap: 5px; /* Reduce space between stacked buttons */
+    }
+
+    .options button {
+        width: 100%;
+    }
+}
+
+.pw{
+    flex-grow: 1;
 }

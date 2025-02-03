@@ -21,6 +21,7 @@ function App() {
   
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignupOpen, setSignupOpen] = useState(false);
+  const [isLoggedIn,setLoggedIn]=useState(false)
   
   
   return (
@@ -29,7 +30,7 @@ function App() {
       
       <div className="app">
       
-      <myContext.Provider value={{isSignupOpen, setSignupOpen,isLoginOpen, setLoginOpen}}>
+      <myContext.Provider value={{isSignupOpen, setSignupOpen,isLoginOpen, setLoginOpen,isLoggedIn,setLoggedIn}}>
 
         <Header />
 

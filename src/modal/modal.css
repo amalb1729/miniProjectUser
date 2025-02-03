@@ -44,6 +44,6 @@
 /* Responsive styling */
 @media (max-width: 479px) {
     .modalContainer {
-        width: 80%;
+        width: 70%;
     }
 }

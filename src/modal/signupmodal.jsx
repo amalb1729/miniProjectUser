@@ -6,7 +6,7 @@ import './log.css'
 function Signupmodal(){
 
 
-    const {isSignupOpen,setSignupOpen}=useContext(myContext)
+    const {isSignupOpen,setSignupOpen,setLoginOpen}=useContext(myContext)
 
     return(
         <Modal isOpen={isSignupOpen} closeModal={() => setSignupOpen(false)}>
@@ -15,7 +15,10 @@ function Signupmodal(){
                 <input type="text" placeholder="Username" />
                 <input type="email" placeholder="Email" />
                 <input type="password" placeholder="Password" />
-                <button className="submit">Register</button>
+                <div className="options">
+                    <button onClick={()=>{ setSignupOpen(false); setLoginOpen(true); }}>Login Now</button>
+                    <button className="submit">Register</button>
+                </div>
             </div>
         </Modal>
 

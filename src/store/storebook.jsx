@@ -1,4 +1,7 @@
 import "./storebook.css"
+import { useContext, useRef } from "react"
+import { myContext } from "../App"
+import { useState } from "react";
 
 function Store() {
   const items = [
@@ -10,6 +13,24 @@ function Store() {
     { name: "Notebook", price: "₹50" }
   ];
 
+  const {isLoginOpen,setLoginOpen,setSignupOpen,isLoggedIn,setLoggedIn}=useContext(myContext)
+
+
+  const [arr,setArr] = useState(Array(6).fill("notBooked"))
+
+
+  const checkLogin=(index)=>{
+    if(!isLoggedIn){
+      setLoginOpen(true)
+    }
+    else{
+      const updatedArr = [...arr]; // Create a new copy
+      updatedArr[index] = "booked"; // Modify the copy
+      setArr(updatedArr);
+    }}
+  
+
+
   return (
     <div className="cardContainer">
       {items.map((item, index) => (
@@ -17,7 +38,17 @@ function Store() {
           <img src="https://placehold.co/100" alt={item.name} />
           <h3>{item.name}</h3>
           <p>{item.price}</p>
-          <button type="button" className="bookBtn">Book now</button>
+
+          { (!isLoggedIn || (arr[index]=="notBooked")) &&
+            (<button type="button" className="bookBtn" onClick={()=>{checkLogin(index)}}>Book now</button>)
+          }
+
+          {isLoggedIn && arr[index]==="booked" && (<p className="bookedText">✅ Booked</p>)}
+
+
+          {console.log(index,arr[index])}
+
+
         </div>
       ))}
     </div>
