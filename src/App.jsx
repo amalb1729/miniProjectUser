@@ -2,16 +2,16 @@
 import Header from "./header/Header"
 import Footer from "./footer/Footer"
 import Test from "./test"
-import Store from "./store/storebook"
-import Filein from "./print/Filein"
-import Profile from "./profile/Profile"
+import Store from "./components/store/storebook"
+import Filein from "./components/print/Filein"
+import Profile from "./components/profile/Profile"
 import Home from "./home/home"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createContext } from "react"
 import { useState } from "react"
 
-import Loginmodal from "./modal/loginmodal"
-import Signupmodal from "./modal/signupmodal"
+import Loginmodal from "./components/modal/loginmodal"
+import Signupmodal from "./components/modal/signupmodal"
 
 
 export const myContext=createContext();

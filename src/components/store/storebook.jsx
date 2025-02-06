@@ -1,6 +1,6 @@
 import "./storebook.css"
 import { useContext, useRef } from "react"
-import { myContext } from "../App"
+import { myContext } from "../../App"
 import { useState } from "react";
 
 function Store() {

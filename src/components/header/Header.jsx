@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import './header.css';
 import { useContext } from 'react';
-import { myContext } from '../App';
+import { myContext } from '../../App';
 
 
 

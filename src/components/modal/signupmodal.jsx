@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import Modal from "./Modal";
-import { myContext } from "../App";
+import { myContext } from "../../App";
 import "./log.css";
 
 function SignupModal() {

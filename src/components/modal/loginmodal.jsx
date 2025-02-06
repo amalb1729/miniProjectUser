@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import Modal from "./Modal";
-import { myContext } from "../App";
+import { myContext } from "../../App";
 import "./log.css";
 
 function LoginModal() {
@@ -59,7 +59,7 @@ function LoginModal() {
 
 
                 <div className="options">
-                    <button onClick={() => { setLoginOpen(false); setSignupOpen(true); }}>Register Now</button>
+                    <button onClick={() => { setLoginOpen(false); setSignupOpen(true);setMessage(null); }}>Register Now</button>
                     <button className="submit" onClick={checkpw}>Submit</button>
                 </div>
             </div>
