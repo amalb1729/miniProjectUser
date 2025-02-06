@@ -16,13 +16,14 @@ import Signupmodal from "./components/modal/signupmodal"
 
 export const myContext=createContext();
 
+
 function App() {
 
   
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignupOpen, setSignupOpen] = useState(false);
   const [isLoggedIn,setLoggedIn]=useState(false)
-  
+  const [user, setUser] = useState(null);
   
   return (
 
@@ -30,7 +31,7 @@ function App() {
       
       <div className="app">
       
-      <myContext.Provider value={{isSignupOpen, setSignupOpen,isLoginOpen, setLoginOpen,isLoggedIn,setLoggedIn}}>
+      <myContext.Provider value={{isSignupOpen, setSignupOpen,isLoginOpen, setLoginOpen,isLoggedIn,setLoggedIn,user, setUser}}>
 
         <Header />
 

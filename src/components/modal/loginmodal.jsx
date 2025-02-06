@@ -4,11 +4,7 @@ import { myContext } from "../../App";
 import "./log.css";
 
 function LoginModal() {
-
-
-
-
-    const { isLoginOpen, setLoginOpen, setSignupOpen, setLoggedIn } = useContext(myContext);
+    const { isLoginOpen, setLoginOpen, setSignupOpen, setLoggedIn, setUser } = useContext(myContext);
     const userRef = useRef(null);
     const passRef = useRef(null);
     const [message, setMessage] = useState("");
@@ -27,6 +23,7 @@ function LoginModal() {
 
         if (response.ok) {
             setMessage("✅ Login Successful!");
+            setUser(data.user); // Store user data in context
             setTimeout(() => {
                 setLoggedIn(true);
                 setLoginOpen(false);
@@ -39,27 +36,15 @@ function LoginModal() {
         }
     };
 
-
-
-
-
-
-
-
-
     return (
         <Modal isOpen={isLoginOpen} closeModal={() => { setLoginOpen(false); setMessage(null); }}>
             <div className="modalContent">
                 <h2>Login</h2>
                 <input type="text" placeholder="Username" ref={userRef} />
                 <input type="password" placeholder="Password" ref={passRef} />
-
-                
                 {message && <p className={message.includes("✅") ? "success" : "error"}>{message}</p>}
-
-
                 <div className="options">
-                    <button onClick={() => { setLoginOpen(false); setSignupOpen(true);setMessage(null); }}>Register Now</button>
+                    <button onClick={() => { setLoginOpen(false); setSignupOpen(true); setMessage(null); }}>Register Now</button>
                     <button className="submit" onClick={checkpw}>Submit</button>
                 </div>
             </div>
