@@ -41,7 +41,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/book" element={<Store />} />
             <Route path="/print" element={<Filein />} />
-            <Route path="/profilessss" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />
 
           </Routes>
           

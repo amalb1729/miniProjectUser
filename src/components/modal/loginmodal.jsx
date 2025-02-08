@@ -8,6 +8,7 @@ function LoginModal() {
     const userRef = useRef(null);
     const passRef = useRef(null);
     const [message, setMessage] = useState("");
+    const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
 
     const checkpw = async () => {
         const response = await fetch("http://localhost:5000/login", {
@@ -41,8 +42,24 @@ function LoginModal() {
             <div className="modalContent">
                 <h2>Login</h2>
                 <input type="text" placeholder="Username" ref={userRef} />
-                <input type="password" placeholder="Password" ref={passRef} />
+
+                <div className="password-container">
+                    <input 
+                        type={showPassword ? "text" : "password"} 
+                        placeholder="Password" 
+                        ref={passRef} 
+                    />
+                    <input 
+                        type="checkbox" 
+                        id="showPasswordLogin" 
+                        checked={showPassword} 
+                        onChange={() => setShowPassword(!showPassword)} 
+                    />
+                    <label htmlFor="showPasswordLogin">Show Password</label>
+                </div>
+
                 {message && <p className={message.includes("✅") ? "success" : "error"}>{message}</p>}
+                
                 <div className="options">
                     <button onClick={() => { setLoginOpen(false); setSignupOpen(true); setMessage(null); }}>Register Now</button>
                     <button className="submit" onClick={checkpw}>Submit</button>

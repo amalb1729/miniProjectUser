@@ -2,8 +2,9 @@
 .modalContent {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 15px;
     align-items: center;
+    width: 100%;
 }
 
 /* Headings */
@@ -13,7 +14,8 @@
 }
 
 /* Input fields */
-.modalContent input {
+.modalContent input, 
+.modalContent select {
     width: 90%;
     padding: 12px;
     margin: 5px 0;
@@ -25,24 +27,50 @@
 }
 
 /* Focus effect on input */
-.modalContent input:focus {
+.modalContent input:focus, 
+.modalContent select:focus {
     border-color: #007bff; /* Highlight input on focus */
 }
 
-.next{
-    flex: 1; /* Make buttons equally sized */
+/* Password input container */
+.password-container {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    gap: 8px;
+}
+
+/* Password checkbox */
+.password-container input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Next Button Styling */
+.next {
+    width: 90%;
     padding: 12px;
     font-size: 1rem;
+    background-color: #f1f1f1;; /* Green */
+    color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    margin-top: 10px;
 }
 
-.next:hover {
-    background-color: #ddd;
+/* Disabled Next Button */
+.next:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
+/* Hover Effect */
+.next:hover:not(:disabled) {
+    background-color:  #ddd;
+}
 
 /* Button container */
 .options {
@@ -92,11 +120,7 @@
         gap: 5px; /* Reduce space between stacked buttons */
     }
 
-    .options button {
+    .options button, .next {
         width: 100%;
     }
-}
-
-.pw{
-    flex-grow: 1;
 }
