@@ -129,7 +129,7 @@ function SignupModal() {
                             <option value="">Select Semester</option>
                             {[...Array(8)].map((_, i) => (
                                 <option key={i + 1} value={i + 1}>{i + 1}</option>
-                            ))}
+                            ))}                       
                         </select>
 
                         {message && <p className={message.includes("✅") ? "success" : "error"}>{message}</p>}

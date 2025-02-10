@@ -11,31 +11,51 @@ function LoginModal() {
     const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
 
     const checkpw = async () => {
-        const response = await fetch("http://localhost:5000/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-                username: userRef.current.value, 
-                password: passRef.current.value 
-            })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            setMessage("✅ Login Successful!");
-            setUser(data.user); // Store user data in context
-            setTimeout(() => {
-                setLoggedIn(true);
-                setLoginOpen(false);
-                setMessage(null);
-            }, 2000);
-        } else {
-            setMessage("❌ " + data.message);
-            userRef.current.value = "";
-            passRef.current.value = "";
+        const username = userRef.current.value.trim();
+        const password = passRef.current.value.trim();
+    
+        // Regex for validation
+        const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/; 
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    
+        // Validate username and password
+        if (!usernameRegex.test(username)) {
+            setMessage("❌ Invalid username! Use 3-20 characters (letters, numbers, _).");
+            return;
+        }
+    
+        if (!passwordRegex.test(password)) {
+            setMessage("❌ Invalid password! Must be 8+ characters, contain a letter, number, and special character.");
+            return;
+        }
+    
+        try {
+            const response = await fetch("http://localhost:5000/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                setMessage("✅ Login Successful!");
+                setUser(data.user);
+                setTimeout(() => {
+                    setLoggedIn(true);
+                    setLoginOpen(false);
+                    setMessage(null);
+                }, 2000);
+            } else {
+                setMessage("❌ " + data.message);
+                userRef.current.value = "";
+                passRef.current.value = "";
+            }
+        } catch (error) {
+            setMessage("❌ Network error. Please try again.");
         }
     };
+    
 
     return (
         <Modal isOpen={isLoginOpen} closeModal={() => { setLoginOpen(false); setMessage(null); }}>
