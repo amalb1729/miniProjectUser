@@ -55,7 +55,7 @@ function SignupModal() {
             return setMessage("❌ Fix errors before submitting.");
         }
 
-        const response = await fetch("http://localhost:5000/register", {
+        const response = await fetch("http://localhost:5000/auth/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email, password, name, department, semester })
