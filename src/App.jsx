@@ -1,11 +1,11 @@
 
-import Header from "./components//header/Header"
-import Footer from "./components//footer/Footer"
+import Header from "./components/header/Header"
+import Footer from "./components/footer/Footer"
 import Test from "./test"
 import Store from "./components/store/storebook"
 import Filein from "./components/print/Filein"
 import Profile from "./components/profile/Profile"
-import Home from "./components//home/home"
+import Home from "./components/home/home"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createContext } from "react"
 import { useState } from "react"
