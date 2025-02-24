@@ -10,7 +10,7 @@ function Store() {
 
   // Fetch items from backend
   useEffect(() => {
-    fetch("http://localhost:5000/api/items")
+    fetch("http://localhost:5000/api/items/view")
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
@@ -42,7 +42,7 @@ function Store() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/orders", {
+      const response = await fetch("http://localhost:5000/api/orders/place", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.userId, itemId: id, quantity: quantities[id] })

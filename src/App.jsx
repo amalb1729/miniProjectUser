@@ -9,10 +9,10 @@ import Home from "./components/home/home"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createContext } from "react"
 import { useState } from "react"
-
 import Loginmodal from "./components/modal/loginmodal"
 import Signupmodal from "./components/modal/signupmodal"
 
+import AdminPanel from "./components/admin/AdminPanel"
 
 export const myContext=createContext();
 
@@ -42,7 +42,7 @@ function App() {
             <Route path="/book" element={<Store />} />
             <Route path="/print" element={<Filein />} />
             <Route path="/profile" element={<Profile />} />
-
+            <Route path="/admin" element={<AdminPanel />} />
           </Routes>
           
           </div>
