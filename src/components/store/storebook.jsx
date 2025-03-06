@@ -1,16 +1,23 @@
 import "./storebook.css";
 import { useContext, useEffect, useState } from "react";
 import { myContext } from "../../App";
+import ConfirmModal from "../modal/confirmModal";
+import { useRef } from "react";
 
 function Store() {
   const { isLoginOpen, setLoginOpen, isLoggedIn, user } = useContext(myContext);
   const [items, setItems] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [orderMessage, setOrderMessage] = useState(""); // Store order response
+  const [confirmOrder,setConfirmOrder]=useState(false)
+  const [bookItemId,setBookItemId]=useState(null);
+
+  
+  
 
   // Fetch items from backend
   useEffect(() => {
-    fetch("http://localhost:5000/api/items/view")
+    fetch("http://localhost:5000/item/items")
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
@@ -19,7 +26,7 @@ function Store() {
         setQuantities(initialQuantities);
       })
       .catch((error) => console.error("Error fetching items:", error));
-  }, []);
+  },[]);
 
   const increaseQuantity = (id) => {
     setQuantities((prev) => ({
@@ -35,28 +42,36 @@ function Store() {
     }));
   };
 
-  const bookItem = async (id) => {
+  const confirmFn=(id)=>{
+    setConfirmOrder(true)
+    setBookItemId(id)
+  }
+
+  
+  const bookItemFn = async () => {
     if (!isLoggedIn) {
       setLoginOpen(true);
       return;
     }
-
+    if(bookItemId){
+      console.log("item bookded")
     try {
-      const response = await fetch("http://localhost:5000/api/orders/place", {
+      const response = await fetch("http://localhost:5000/order/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.userId, itemId: id, quantity: quantities[id] })
+        body: JSON.stringify({ userId: user.userId, itemId: bookItemId, quantity: quantities[bookItemId] })
       });
 
       const data = await response.json();
       if (response.ok) {
-        setOrderMessage(`✅ Order placed: ${quantities[id]} item(s) booked`);
+        setOrderMessage(`✅ Order placed: ${quantities[bookItemId]} item(s) booked`);
         setItems((prevItems) =>
           prevItems.map(item =>
-            item._id === id ? { ...item, stock: item.stock - quantities[id] } : item
+            item._id === bookItemId ? { ...item, stock: item.stock - quantities[bookItemId] } : item
           )
         );
 
+        setBookItemId(null);
 
         setTimeout(()=>{
           setOrderMessage(null)
@@ -69,9 +84,13 @@ function Store() {
     } catch (error) {
       setOrderMessage("❌ Error placing order");
     }
+  }
   };
 
+  const confirmProps={confirmOrder,setConfirmOrder,setBookItemId,bookItemFn}
+
   return (
+    <>
     <div className="store-container">
       {orderMessage && <p className="order-message">{orderMessage}</p>}
 
@@ -91,7 +110,7 @@ function Store() {
                   <button onClick={() => increaseQuantity(item._id)}>+</button>
                 </div>
                 <p>{`Total: ₹${item.price * quantities[item._id]}`}</p>
-                <button className="bookBtn" onClick={() => bookItem(item._id)}>Book now</button>
+                <button className="bookBtn" onClick={() =>confirmFn(item._id)}>Book now</button>
               </>
             ) : (
               <p className="out-of-stock">❌ Out of Stock</p>
@@ -100,6 +119,9 @@ function Store() {
         ))}
       </div>
     </div>
+
+    {confirmOrder?(<ConfirmModal {...confirmProps}/>):null}
+    </>
   );
 }
 

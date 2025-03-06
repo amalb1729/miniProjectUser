@@ -9,9 +9,9 @@ function Profile() {
         <div className="profile">
             <div className="profileDetails">
                 <img src="https://placehold.co/100" alt="Profile" className="profilePic" />
-                <p><strong>Name:</strong> {user?.name || "N/A"}</p>
-                <p><strong>Department:</strong> {user?.department || "N/A"}</p>
-                <p><strong>Semester:</strong> {user?.semester || "N/A"}</p>
+                <p>Name:{user?.name || "N/A"}</p>
+                <p>Department:{user?.department || "N/A"}</p>
+                <p>Semester: {user?.semester || "N/A"}</p>
             </div>
             <div className="profileQr">
                 <h2>QR Code</h2>

@@ -69,6 +69,14 @@
     border: 1px solid #ccc; /* Light border */
   }
   
+
+  #range{
+    background-color: #f1f1f1; /* Light grey for dropdown */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc; /* Light border */
+  }
   /* Container for print preferences section */
   .printPreferences {
     display: flex;
