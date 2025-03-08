@@ -22,7 +22,7 @@ function Header() {
                     }
 
                     {
-                      isLoggedIn &&(<button type="button" className="accbtn login" onClick={() => setLoggedIn(false)} >Logout</button>)
+                      isLoggedIn &&(<button type="button" className="accbtn login" onClick={() => {setLoggedIn(false);}} >Logout</button>)
                     }
 
 

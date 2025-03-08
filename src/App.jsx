@@ -6,7 +6,7 @@ import Store from "./components/store/storebook"
 import Filein from "./components/print/Filein"
 import Profile from "./components/profile/Profile"
 import Home from "./components/home/home"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route,Navigate} from "react-router-dom";
 import { createContext } from "react"
 import { useState } from "react"
 import Loginmodal from "./components/modal/loginmodal"
@@ -40,7 +40,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/book" element={<Store />} />
             <Route path="/print" element={<Filein />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={isLoggedIn?<Profile />:<Navigate to="/" />} />
           </Routes>
           
           </div>
