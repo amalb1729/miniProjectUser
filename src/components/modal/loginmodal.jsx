@@ -41,6 +41,10 @@ function LoginModal() {
             if (response.ok) {
                 setMessage("✅ Login Successful!");
                 setUser(data.user);
+
+                sessionStorage.setItem('isLoggedIn', 'true');
+                sessionStorage.setItem('userInfo', JSON.stringify(data.user));
+
                 setTimeout(() => {
                     setLoggedIn(true);
                     setLoginOpen(false);

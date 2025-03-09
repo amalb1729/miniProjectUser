@@ -7,7 +7,15 @@ import { myContext } from '../../App';
 
 function Header() {
 
-    const {setLoginOpen,setSignupOpen,isLoggedIn,setLoggedIn}=useContext(myContext)
+    const {setLoginOpen,setSignupOpen,isLoggedIn,setLoggedIn,setUser}=useContext(myContext)
+    
+    const handleLogout = () => {
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('userInfo');
+        setLoggedIn(false);
+        setUser(null);
+      };
+
     
     return (
         <>
@@ -22,7 +30,7 @@ function Header() {
                     }
 
                     {
-                      isLoggedIn &&(<button type="button" className="accbtn login" onClick={() => {setLoggedIn(false);}} >Logout</button>)
+                      isLoggedIn &&(<button type="button" className="accbtn login" onClick={handleLogout} >Logout</button>)
                     }
 
 

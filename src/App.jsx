@@ -21,8 +21,19 @@ function App() {
   
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignupOpen, setSignupOpen] = useState(false);
-  const [isLoggedIn,setLoggedIn]=useState(false)
-  const [user, setUser] = useState(null);
+
+  //const [isLoggedIn,setLoggedIn]=useState(false)
+  //const [user, setUser] = useState(null);
+  
+  const [isLoggedIn, setLoggedIn] = useState(() => {
+    return sessionStorage.getItem('isLoggedIn') === 'true';
+  });
+  
+  const [user, setUser] = useState(() => {
+    const savedUser = sessionStorage.getItem('userInfo');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
   
   return (
 
