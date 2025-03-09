@@ -1,6 +1,6 @@
 import Modal from "./Modal.jsx";
 import { useState } from "react";
-
+import "./confirmModal.css";
 //import { myContext } from "../../App";
 //import { useContext } from "react";
 function ConfirmModal({confirmOrder,setConfirmOrder,setBookItemId,bookItemFn}){
@@ -10,20 +10,27 @@ function ConfirmModal({confirmOrder,setConfirmOrder,setBookItemId,bookItemFn}){
     return(
         <>
         <Modal isOpen={confirmOrder} closeModal={()=>setConfirmOrder(false)}>
-        <div>
-            <span>Are you sure, you want to order this item?</span>
-            <button onClick={()=>{setConfirmOrder(false);setBookItemId(null)}}>cancel</button>
-            <button onClick={()=>{
-                                 setConfirmOrder(false);
-                                 bookItemFn();
-                                 }}>order</button>
-        </div>
+            <div className="confirm-modal">
+                <span className="confirm-message">Are you sure, you want to order this item?</span>
+                <div className="confirm-buttons">
+                    <button 
+                        className="confirm-btn cancel"
+                        onClick={()=>{setConfirmOrder(false);setBookItemId(null)}}>
+                        Cancel
+                    </button>
+                    <button 
+                        className="confirm-btn confirm"
+                        onClick={()=>{
+                            setConfirmOrder(false);
+                            bookItemFn();
+                        }}>
+                        Order
+                    </button>
+                </div>
+            </div>
         </Modal>
         </>
     )
-
-
-
 }
 
 

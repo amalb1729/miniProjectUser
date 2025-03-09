@@ -1,0 +1,88 @@
+.full-order-modal {
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    overflow-x: auto;
+    max-width: 90%;
+    margin: 20px auto;
+    position: relative;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 10px 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.order-table th, 
+.order-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.order-table th {
+    background: #3498db;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.order-row td {
+    font-size: 1em;
+    color: #2c3e50;
+    transition: background-color 0.2s ease;
+}
+
+.order-row:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.order-row:hover {
+    background: #f1f4f7;
+}
+
+.order-table td:first-child,
+.order-table th:first-child {
+    padding-left: 25px;
+}
+
+.order-table td:last-child,
+.order-table th:last-child {
+    padding-right: 25px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .full-order-modal {
+        padding: 20px;
+        max-width: 95%;
+        margin: 10px auto;
+    }
+
+    .order-table th, 
+    .order-table td {
+        padding: 12px 15px;
+        font-size: 0.9em;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    .order-table {
+        font-size: 0.85em;
+    }
+
+    .order-table th, 
+    .order-table td {
+        padding: 10px;
+    }
+}
