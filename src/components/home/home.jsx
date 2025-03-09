@@ -6,7 +6,7 @@ function Home(){
                 <div className="home-container">
                 {/* Hero Section */}
                 <section className="hero">
-                    <h1>Welcome to SOE Store CUSAT</h1>
+                    <h1>Welcome to Store </h1>
                     <p>Your one-stop platform for booking academic materials and printing services.</p>
                 </section>
 
@@ -36,7 +36,7 @@ function Home(){
                 {/* Announcements Section */}
                 <section className="announcements">
                     <h2>📢 Latest Announcements</h2>
-                    <p>🔹 Book restock updates | 🔹 Special discounts on printing | 🔹 Service maintenance alerts</p>
+                    <p>🔹 Book restock updates | 🔹 Service maintenance alerts</p>
                 </section>
 
                 </div>

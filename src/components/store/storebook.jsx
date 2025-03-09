@@ -71,6 +71,7 @@ function Store() {
           )
         );
 
+        setQuantities((prev)=>({...prev,[bookItemId]:1}))
         setBookItemId(null);
 
         setTimeout(()=>{
@@ -80,9 +81,15 @@ function Store() {
         
       } else {
         setOrderMessage(`❌ ${data.message}`);
+        setTimeout(()=>{
+          setOrderMessage(null)
+        },3000)
       }
     } catch (error) {
       setOrderMessage("❌ Error placing order");
+      setTimeout(()=>{
+        setOrderMessage(null)
+      },3000)
     }
   }
   };
@@ -92,6 +99,8 @@ function Store() {
   return (
     <>
     <div className="store-container">
+
+
       {orderMessage && <p className="order-message">{orderMessage}</p>}
 
       <div className="cardContainer">

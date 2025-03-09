@@ -1,5 +1,5 @@
 import React from "react";
-import "./Modal.css"; // Styling for the modal
+import "./modal.css"; // Styling for the modal
 
 function Modal({ isOpen, closeModal, children }) {
   if (!isOpen) return null; // Don't render the modal if it's closed

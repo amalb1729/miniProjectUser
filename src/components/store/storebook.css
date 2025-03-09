@@ -102,14 +102,30 @@
   }
   
   .order-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    
     text-align: center;
     font-weight: bold;
-    margin: 10px;
-    padding: 10px;
+    padding: 15px 30px;
     color: green;
     background-color: #d4edda;
     border: 1px solid #c3e6cb;
-    border-radius: 5px;
+    border-radius: 8px;
+    z-index: 9999; /* Ensures it appears above other elements */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: fadeInOut 3s ease-in-out;
+  }
+  
+  /* Add animation keyframes */
+  @keyframes fadeInOut {
+    0% { opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { opacity: 0; }
   }
   
   .out-of-stock {

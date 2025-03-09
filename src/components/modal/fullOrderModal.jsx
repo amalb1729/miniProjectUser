@@ -6,7 +6,6 @@ function FullOrderModal({ fullOrderModal, setFullOrderModal, fullOrder, setFullO
     return (
         <>
             <Modal isOpen={fullOrderModal} closeModal={() => { setFullOrderModal(false); setFullOrder(null); }}>
-                <div className="full-order-modal">
                     <table className="order-table">
                         <thead>
                             <tr>
@@ -27,7 +26,6 @@ function FullOrderModal({ fullOrderModal, setFullOrderModal, fullOrder, setFullO
                             ))}
                         </tbody>
                     </table>
-                </div>
             </Modal>
         </>
     );

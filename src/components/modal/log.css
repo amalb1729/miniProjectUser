@@ -2,89 +2,103 @@
 .modalContent {
     display: flex;
     flex-direction: column;
-    padding: 15px;
+    padding: 20px;
     align-items: center;
-    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Headings */
 .modalContent h2 {
-    margin-bottom: 15px;
-    color: #333; /* Dark text for better contrast */
+    margin-bottom: 20px;
+    color: #333;
+    width: 100%;
+    text-align: center;
 }
 
-/* Input fields */
-.modalContent input, 
+/* Form group to maintain consistent width */
+.modalContent input[type="text"],
+.modalContent input[type="password"],
+.modalContent input[type="email"],
 .modalContent select {
-    width: 90%;
+    width: 100%;
     padding: 12px;
-    margin: 5px 0;
+    margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
     outline: none;
     transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
-/* Focus effect on input */
-.modalContent input:focus, 
+/* Focus state for all inputs */
+.modalContent input[type="text"]:focus,
+.modalContent input[type="password"]:focus,
+.modalContent input[type="email"]:focus,
 .modalContent select:focus {
-    border-color: #007bff; /* Highlight input on focus */
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
 }
 
-/* Password input container */
+/* Password container styling */
 .password-container {
+    width: 100%;
+    margin: 8px 0;
     display: flex;
     align-items: center;
-    width: 90%;
-    gap: 8px;
+    gap: 10px;
 }
 
-/* Password checkbox */
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    flex: 1;
+    margin: 0; /* Remove margin since container has margin */
+}
+
+/* Checkbox container */
 .password-container input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
+    width: auto;
+    height: auto;
+    margin: 0;
     cursor: pointer;
 }
 
-/* Next Button Styling */
-.next {
-    width: 90%;
-    padding: 12px;
-    font-size: 1rem;
-    background-color: #f1f1f1;; /* Green */
-    color: white;
-    border: none;
+.password-container label {
+    font-size: 0.9rem;
+    color: #666;
+    cursor: pointer;
+}
+
+/* Message styling */
+.success, .error {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
     border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    margin-top: 10px;
+    text-align: center;
 }
 
-/* Disabled Next Button */
-.next:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+.success {
+    background-color: #d4edda;
+    color: #155724;
 }
 
-/* Hover Effect */
-.next:hover:not(:disabled) {
-    background-color:  #ddd;
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
 /* Button container */
 .options {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between; /* Evenly distribute buttons */
+    justify-content: space-between;
     width: 100%;
-    margin-top: 10px;
-    gap: 10px; /* Space between buttons */
+    margin-top: 20px;
+    gap: 10px;
 }
 
-/* General button styling */
 .options button {
-    flex: 1; /* Make buttons equally sized */
+    flex: 1;
     padding: 12px;
     font-size: 1rem;
     border: none;
@@ -93,7 +107,6 @@
     transition: all 0.3s ease-in-out;
 }
 
-/* Primary buttons */
 .submit {
     background-color: #007bff;
     color: white;
@@ -103,9 +116,8 @@
     background-color: #0056b3;
 }
 
-/* Secondary buttons */
 .options button:not(.submit) {
-    background-color: #f1f1f1; /* Light gray */
+    background-color: #f1f1f1;
     color: #333;
 }
 
@@ -113,14 +125,52 @@
     background-color: #ddd;
 }
 
+/* Add these styles for the Next button */
+.next {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.next:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.next:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
 /* Responsive adjustments */
 @media (max-width: 480px) {
-    .options {
-        flex-direction: column;
-        gap: 5px; /* Reduce space between stacked buttons */
+    .modalContent {
+        padding: 15px 20px;
+        width: calc(100% - 40px);
     }
 
-    .options button, .next {
+    .options {
+        flex-direction: column;
+    }
+
+    .options button {
+        width: 100%;
+    }
+
+    .password-container {
+        flex-wrap: wrap;
+    }
+
+    .password-container input[type="password"],
+    .password-container input[type="text"] {
         width: 100%;
     }
 }

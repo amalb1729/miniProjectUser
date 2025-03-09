@@ -4,9 +4,6 @@
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     overflow-x: auto;
-    max-width: 90%;
-    margin: 20px auto;
-    position: relative;
 }
 
 .order-table {
@@ -64,8 +61,6 @@
 @media (max-width: 768px) {
     .full-order-modal {
         padding: 20px;
-        max-width: 95%;
-        margin: 10px auto;
     }
 
     .order-table th, 
