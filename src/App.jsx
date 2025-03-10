@@ -52,6 +52,7 @@ function App() {
             <Route path="/book" element={<Store />} />
             <Route path="/print" element={<Filein />} />
             <Route path="/profile" element={isLoggedIn?<Profile />:<Navigate to="/" />} />
+            <Route path="/*" element={<Navigate to="/" />} />
           </Routes>
           
           </div>

@@ -47,7 +47,29 @@ function SignupModal() {
         setPasswordError(passwordRegex.test(value) ? "" : "❌ 8+ characters, 1 letter, 1 number, 1 special character");
     };
 
+    const resetForm = () => {
+        // Reset all form fields
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setName("");
+        setDepartment("");
+        setSemester("");
+        // Reset validation messages
+        setUsernameError("");
+        setEmailError("");
+        setPasswordError("");
+        // Reset step and other states
+        setStep(1);
+        setShowPassword(false);
+        setMessage("");
+    };
+
     const registerUser = async () => {
+
+
+        try{
+            
         if (!username || !email || !password || !name || !department || !semester) {
             return setMessage("❌ Please fill in all fields.");
         }
@@ -68,15 +90,21 @@ function SignupModal() {
             setTimeout(() => {
                 setSignupOpen(false);
                 setLoginOpen(true);
-                setMessage(null);
+                resetForm();
             }, 2000);
         } else {
             setMessage("❌ " + data.message);
         }
+    }catch(error){
+        console.log(error)
+    }
     };
 
     return (
-        <Modal isOpen={isSignupOpen} closeModal={() => { setSignupOpen(false); setMessage(null); }}>
+        <Modal isOpen={isSignupOpen} closeModal={() => { 
+            setSignupOpen(false); 
+            resetForm();
+        }}>
             <div className="modalContent">
                 {step === 1 ? (
                     <>
