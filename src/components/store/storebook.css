@@ -156,3 +156,127 @@
     top: 0;
     z-index: 99;
   }
+
+  /* Add these new styles for the search functionality */
+  .search-container {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+
+  .search-box {
+    position: relative;
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 15px 45px 15px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 1rem;
+    background-color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-style: normal;
+    pointer-events: none;
+  }
+
+  .search-results {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    max-height: 300px;
+    overflow-y: auto;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .search-result-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .search-result-item:last-child {
+    border-bottom: none;
+  }
+
+  .search-result-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+  }
+
+  .search-result-item span {
+    color: #333;
+    font-size: 0.95rem;
+  }
+
+  /* Animations */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Scrollbar styling for search results */
+  .search-results::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .search-results::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .search-results::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 4px;
+  }
+
+  .search-results::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+  }
+
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .search-container {
+      padding: 0 15px;
+    }
+
+    .search-input {
+      padding: 12px 40px 12px 15px;
+      font-size: 0.95rem;
+    }
+
+    .search-result-item {
+      padding: 10px 15px;
+    }
+  }

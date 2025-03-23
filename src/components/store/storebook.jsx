@@ -109,7 +109,7 @@ function Store() {
   };
 
   const scroll=(id)=>{
-    itemRefs.current[id].scrollIntoView();
+    itemRefs.current[id].scrollIntoView({behavior:"smooth",block:"center"});
     console.log(itemRefs)
   }
   const confirmProps={confirmOrder,setConfirmOrder,setBookItemId,bookItemFn}
@@ -119,17 +119,30 @@ function Store() {
     <div className="store-container">
 
 
-      <div id="searchbox">
-      <input type="text" value={query} onChange={(e)=>setQuery(e.target.value) } placeholder="...search"></input>
-      {!filterItems?null:(
-        <>
-        {filterItems.map((element) => (
-            <div key={element.id}>
-                <span onClick={()=>{scroll(element._id); setQuery("")}}>{element.name}</span>
-            </div>
-        ))}
-        </>
-      )}
+      <div className="search-container">
+        <div className="search-box">
+          <input 
+            type="text" 
+            value={query} 
+            onChange={(e)=>setQuery(e.target.value)} 
+            placeholder="Search items..."
+            className="search-input"
+          />
+          <i className="search-icon">🔍</i>
+        </div>
+        {!filterItems ? null : (
+          <div className="search-results">
+            {filterItems.map((element) => (
+              <div 
+                key={element.id} 
+                className="search-result-item"
+                onClick={() => {scroll(element._id); setQuery("")}}
+              >
+                <span>{element.name}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {orderMessage && <p className="order-message">{orderMessage}</p>}
