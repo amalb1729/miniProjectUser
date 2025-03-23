@@ -18,21 +18,30 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 16%;
     border-radius: 12px; /* Slightly rounder corners */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
-    transition: transform 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    width: 200px;
+
   }
   
   .card img {
+    opacity:.7;
     border-radius: 8px; /* Round image corners */
     margin-bottom: 10px;
-    width: 100%;
-    height: auto;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border: 2px solid #000;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
   }
   
   .card:hover {
     transform: scale(1.05); /* Slight zoom-in effect */
+  }
+  .card:hover img{
+    opacity: 1;
   }
   
   /* Heading style */
@@ -133,3 +142,17 @@
     font-weight: bold;
   }
   
+  @media (max-width:480px) {
+
+    .card {
+      width:70%;
+
+    }
+    
+  }
+
+  #searchbox{
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }

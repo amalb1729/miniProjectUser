@@ -12,12 +12,16 @@ function Store() {
   const [confirmOrder,setConfirmOrder]=useState(false)
   const [bookItemId,setBookItemId]=useState(null);
 
-  
-  
+
+  const itemRefs=useRef({});
+
+  const [query,setQuery]=useState("")
+  const [filterItems,setFilteredItems]=useState([])
+
 
   // Fetch items from backend
   useEffect(() => {
-    fetch("http://localhost:5000/item/items")
+    fetch("/api/item/items")
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
@@ -27,6 +31,16 @@ function Store() {
       })
       .catch((error) => console.error("Error fetching items:", error));
   },[]);
+
+
+  useEffect(()=>{
+    if(query.trim()==="")
+      setFilteredItems([]);
+    if(query && items){
+      console.log(itemRefs)
+      setFilteredItems([...items.filter((item)=>item.name.toLowerCase().includes(query.toLowerCase()))])
+    }
+  },[query])
 
   const increaseQuantity = (id) => {
     setQuantities((prev) => ({
@@ -56,7 +70,7 @@ function Store() {
     if(bookItemId){
       console.log("item bookded")
     try {
-      const response = await fetch("http://localhost:5000/order/order", {
+      const response = await fetch("/api/order/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.userId, itemId: bookItemId, quantity: quantities[bookItemId] })
@@ -94,6 +108,10 @@ function Store() {
   }
   };
 
+  const scroll=(id)=>{
+    itemRefs.current[id].scrollIntoView();
+    console.log(itemRefs)
+  }
   const confirmProps={confirmOrder,setConfirmOrder,setBookItemId,bookItemFn}
 
   return (
@@ -101,12 +119,25 @@ function Store() {
     <div className="store-container">
 
 
+      <div id="searchbox">
+      <input type="text" value={query} onChange={(e)=>setQuery(e.target.value) } placeholder="...search"></input>
+      {!filterItems?null:(
+        <>
+        {filterItems.map((element) => (
+            <div key={element.id}>
+                <span onClick={()=>{scroll(element._id); setQuery("")}}>{element.name}</span>
+            </div>
+        ))}
+        </>
+      )}
+      </div>
+
       {orderMessage && <p className="order-message">{orderMessage}</p>}
 
       <div className="cardContainer">
-        {items.map((item) => (
-          <div className="card" key={item._id}>
-            <img src="https://placehold.co/100" alt={item.name} />
+        {items.map((item,index) => (
+          <div className="card" key={item._id} ref={(el) => (itemRefs.current[item._id] = el)}>
+            <img src={`/api/images/${item.name}.jpg`}  onError={(e) => (e.target.src = "https://placehold.co/100")} alt={item.name} />
             <h3>{item.name}</h3>
             <p>{`₹${item.price}`}</p>
             <p>{`Stock: ${item.stock}`}</p>
@@ -132,6 +163,6 @@ function Store() {
     {confirmOrder?(<ConfirmModal {...confirmProps}/>):null}
     </>
   );
-}
 
+}
 export default Store;
