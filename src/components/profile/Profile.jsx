@@ -15,7 +15,7 @@ function Profile() {
     const [fullOrder,setFullOrder]=useState(null) // refers to the oject of complete order we are showing in complete modal
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/order/orders/${user.userId}`)
+        fetch(`/api/order/orders/${user.userId}`)
         .then(res=>res.json())
         .then(data=>{
                     setPendingOrders(data.pendingOrders);

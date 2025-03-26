@@ -39,7 +39,7 @@ function FullOrderModal({ fullOrderModal, setFullOrderModal, fullOrder, setFullO
                             
                             })}
                         
-                            <tr><td colspan="4">Grand Total</td>
+                            <tr><td colSpan="4">Grand Total</td>
                             <td>{total}</td></tr>
                         </tbody>
                     </table>

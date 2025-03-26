@@ -280,3 +280,117 @@
       padding: 10px 15px;
     }
   }
+
+  @media (max-width: 480px) {
+    /* Search container adjustments */
+    .search-container {
+        width: 95%;
+        padding: 0 10px;
+        margin: 10px auto;
+    }
+
+    .search-input {
+        padding: 12px 35px 12px 15px;
+        font-size: 0.9rem;
+    }
+
+    .search-results {
+        max-height: 250px;
+        top: calc(100% + 3px);
+    }
+
+    .search-result-item {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    /* Card container adjustments */
+    .cardContainer {
+        margin: 10px auto;
+        gap: 10px;
+        width: 95%;
+    }
+
+    /* Individual card adjustments */
+    .card {
+        width: 100%;
+        padding: 12px;
+        margin: 5px 0;
+    }
+
+    .card img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .card h3 {
+        font-size: 1em;
+        margin: 8px 0;
+    }
+
+    .card p {
+        font-size: 1em;
+        margin: 4px 0;
+    }
+
+    /* Quantity selector adjustments */
+    .quantity-selector {
+        margin: 8px 0;
+    }
+
+    .quantity-selector button {
+        padding: 4px 8px;
+        font-size: 1em;
+    }
+
+    .quantity-selector span {
+        margin: 0 8px;
+        font-size: 1em;
+    }
+
+    /* Book button adjustments */
+    .bookBtn {
+        padding: 8px 15px;
+        font-size: 1em;
+        margin-top: 8px;
+    }
+
+    /* Order message adjustments */
+    .order-message {
+        width: 90%;
+        padding: 12px 20px;
+        font-size: 0.9em;
+    }
+
+    /* Out of stock message */
+    .out-of-stock {
+        font-size: 0.9em;
+        margin: 8px 0;
+    }
+  }
+
+  /* Add a smaller screen size breakpoint for very small devices */
+  @media (max-width: 320px) {
+    .card {
+        padding: 10px;
+    }
+
+    .card img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .search-input {
+        font-size: 0.85rem;
+    }
+
+    .quantity-selector button,
+    .quantity-selector span {
+        font-size: 0.9em;
+    }
+
+    .bookBtn {
+        padding: 6px 12px;
+        font-size: 0.9em;
+    }
+  }
