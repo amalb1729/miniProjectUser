@@ -1,0 +1,55 @@
+.cart-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #f4f4f4;
+}
+
+button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.remove-btn {
+    background: red;
+    color: white;
+}
+
+.checkout-btn {
+    background: green;
+    color: white;
+    padding: 10px 15px;
+    margin-top: 20px;
+}
+
+.fade-message {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    color: blue;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.fade-message.show {
+    opacity: 1;
+}

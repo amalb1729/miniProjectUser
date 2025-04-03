@@ -25,6 +25,7 @@ function Store() {
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
+        setFilteredItems(data);
         const initialQuantities = {};
         data.forEach(item => initialQuantities[item._id] = 1);
         setQuantities(initialQuantities);
@@ -35,19 +36,21 @@ function Store() {
 
   useEffect(()=>{
     if(query.trim()==="")
-      setFilteredItems([]);
+      setFilteredItems([...items]);
     if(query && items){
       console.log(itemRefs)
-      setFilteredItems([...items.filter((item)=>item.name.toLowerCase().includes(query.toLowerCase()))])
+      setFilteredItems([...items.filter((item)=>(item.name.toLowerCase().includes(query.toLowerCase())))])
     }
-  },[query])
+  },[query,items])
 
   const increaseQuantity = (id) => {
     setQuantities((prev) => ({
       ...prev,
-      [id]: Math.min(prev[id] + 1, items.find(item => item._id === id).stock)
+      //[id]: Math.min(prev[id] + 1, items.find(item => item._id === id).stock)
+      [id]: prev[id] + 1
     }));
   };
+
 
   const decreaseQuantity = (id) => {
     setQuantities((prev) => ({
@@ -70,7 +73,7 @@ function Store() {
     if(bookItemId){
       console.log("item bookded")
     try {
-      const response = await fetch("/api/order/order", {
+      const response = await fetch("/api/order/toCart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.userId, itemId: bookItemId, quantity: quantities[bookItemId] })
@@ -78,7 +81,7 @@ function Store() {
 
       const data = await response.json();
       if (response.ok) {
-        setOrderMessage(`✅ Order placed: ${quantities[bookItemId]} item(s) booked`);
+        setOrderMessage(`✅ item added to cart: ${quantities[bookItemId]} item(s) booked`);
         setItems((prevItems) =>
           prevItems.map(item =>
             item._id === bookItemId ? { ...item, stock: item.stock - quantities[bookItemId] } : item
@@ -130,7 +133,7 @@ function Store() {
           />
           <i className="search-icon">🔍</i>
         </div>
-        {!filterItems ? null : (
+        {/* {!filterItems ? null : (
           <div className="search-results">
             {filterItems.map((element) => (
               <div 
@@ -142,20 +145,20 @@ function Store() {
               </div>
             ))}
           </div>
-        )}
+        )} */}
       </div>
 
       {orderMessage && <p className="order-message">{orderMessage}</p>}
 
       <div className="cardContainer">
-        {items.map((item,index) => (
+        {filterItems.map((item,index) => (
           <div className="card" key={item._id} ref={(el) => (itemRefs.current[item._id] = el)}>
             <img src={`/api/images/${item.name}.jpg`}  onError={(e) => (e.target.src = "https://placehold.co/100")} alt={item.name} />
             <h3>{item.name}</h3>
             <p>{`₹${item.price}`}</p>
-            <p>{`Stock: ${item.stock}`}</p>
+            {/* <p>{`Stock: ${item.stock}`}</p> */}
 
-            {item.stock > 0 ? (
+            {/* {item.stock > 0 ? ( */}
               <>
                 <div className="quantity-selector">
                   <button onClick={() => decreaseQuantity(item._id)}>-</button>
@@ -163,11 +166,11 @@ function Store() {
                   <button onClick={() => increaseQuantity(item._id)}>+</button>
                 </div>
                 <p>{`Total: ₹${item.price * quantities[item._id]}`}</p>
-                <button className="bookBtn" onClick={() =>confirmFn(item._id)}>Book now</button>
+                <button className="bookBtn" onClick={() =>confirmFn(item._id)}>Add to cart</button>
               </>
-            ) : (
-              <p className="out-of-stock">❌ Out of Stock</p>
-            )}
+             {/* ) : (
+               <p className="out-of-stock">❌ Out of Stock</p>
+            )} */}
           </div>
         ))}
       </div>

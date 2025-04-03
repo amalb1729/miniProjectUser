@@ -43,7 +43,10 @@ function Header() {
                         <li><NavLink to="/Print" className={({ isActive }) => isActive ? "act" : "inact" }>Print Me</NavLink></li>
 
                         {isLoggedIn &&
-                             (<li><NavLink to="/Profile" className={({ isActive }) => isActive ? "act" : "inact"}>Profile</NavLink></li>)
+                            <>
+                             <li><NavLink to="/Profile" className={({ isActive }) => isActive ? "act" : "inact"}>Profile</NavLink></li>
+                             <li><NavLink to="/Cart" className={({ isActive }) => isActive ? "act" : "inact" }>Cart</NavLink></li>
+                            </>
                         }
                     </ul>
                 </nav>

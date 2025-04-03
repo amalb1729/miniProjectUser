@@ -57,6 +57,9 @@ function LoginModal() {
             }
         } catch (error) {
             setMessage("❌ Network error. Please try again.");
+            userRef.current.value = "";
+            passRef.current.value = "";
+
         }
     };
     

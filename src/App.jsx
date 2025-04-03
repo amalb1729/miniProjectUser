@@ -11,7 +11,7 @@ import { createContext } from "react"
 import { useState } from "react"
 import Loginmodal from "./components/modal/loginmodal"
 import Signupmodal from "./components/modal/signupmodal"
-
+import Cart from "./components/cart/Cart"
 
 export const myContext=createContext();
 
@@ -52,6 +52,7 @@ function App() {
             <Route path="/book" element={<Store />} />
             <Route path="/print" element={<Filein />} />
             <Route path="/profile" element={isLoggedIn?<Profile />:<Navigate to="/" />} />
+            <Route path="/cart" element={isLoggedIn?<Cart />:<Navigate to="/" />} />
             <Route path="/*" element={<Navigate to="/" />} />
           </Routes>
           
