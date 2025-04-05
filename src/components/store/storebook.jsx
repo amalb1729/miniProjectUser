@@ -159,7 +159,7 @@ function Store() {
           <div className="card" key={item._id} ref={(el) => (itemRefs.current[item._id] = el)}>
             {/* <img src={`/api/images/${item.name}.jpg`}  onError={(e) => (e.target.src = "https://placehold.co/100")} alt={item.name} /> */}
             <IKImage
-              path={`images/${item.name}.jpg`}
+              path={item.pictureURL}
               urlEndpoint={import.meta.env.VITE_PUBLIC_URL_ENDPOINT}
               onError={(e) => (e.target.src = "https://placehold.co/100")} alt={item.name}
             />

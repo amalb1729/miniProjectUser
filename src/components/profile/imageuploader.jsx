@@ -62,7 +62,7 @@ useEffect(() => {
         <>
         <IKContext publicKey={import.meta.env.VITE_PUBLIC_PUBLIC_KEY} urlEndpoint={import.meta.env.VITE_PUBLIC_URL_ENDPOINT} authenticator={authenticator} >
             <IKImage   key={imageKey} path={url} urlEndpoint={import.meta.env.VITE_PUBLIC_URL_ENDPOINT} onError={(e) => (e.target.src = "https://placehold.co/100")} />
-            <IKUpload  onError={onError} onSuccess={onSuccess} folder={"/users"}/>
+            <IKUpload  useUniqueFileName={true} onError={onError} onSuccess={onSuccess} folder={"/images"}/>
         </IKContext>
         </>
 
