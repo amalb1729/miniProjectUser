@@ -59,14 +59,20 @@ function Cart() {
         setMyCart(prev => prev.filter(element => element.itemId !== id));
     };
 
-    const saveCart = async () => {
+    const saveCart = async (saving) => {
         try {
             console.log("Saving cart...");
-            await fetch(`/api/order/saveCart/${cartId}`, {
+            const response=await fetch(`/api/order/saveCart/${cartId}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ myCart }),
             });
+            if(saving){
+                const data=await response.json();
+                setMessage(data.message);
+                setFade(true); // Start fade-in effect
+                setTimeout(() => setFade(false), 3000); // Remove after 3 seconds
+            }
         } catch (error) {
             console.log(error);
         }
@@ -74,16 +80,16 @@ function Cart() {
 
     const checkoutCart = async () => {
         try {
-            await saveCart();
+            await saveCart(false);
             const response = await fetch(`/api/order/toOrder/${cartId}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ myCart }),
             });
             const data = await response.json();
-            setMessage(data.message);
             setMyCart(data.updatedCart.userCart);
             fetchLiveStock();
+            setMessage(data.message);
             setFade(true); // Start fade-in effect
             setTimeout(() => setFade(false), 3000); // Remove after 3 seconds
         } catch (error) {
@@ -142,7 +148,7 @@ function Cart() {
             </h3>
 
             <button className="checkout-btn" onClick={checkoutCart}>Proceed to Checkout</button>
-            <button className="save-btn" onClick={saveCart}>Save Cart</button>
+            <button className="save-btn" onClick={()=>{saveCart(true)}}>Save Cart</button>
         </div>
     );
 }
