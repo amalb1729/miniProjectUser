@@ -1,125 +1,91 @@
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useContext, useEffect,useState } from "react";
 import { myContext } from "../../App";
 import "./profile.css";
 import FullOrderModal from "../modal/fullOrderModal";
-import Cropper from "react-easy-crop";
-import getCroppedImg from "./cropimage"; // Your crop helper
-
+import ImageUploader from "./imageUploader"
+import { IKImage } from 'imagekitio-react';
+import { use } from "react";
 function Profile() {
-    const { user } = useContext(myContext);
-    const [pendingOrders, setPendingOrders] = useState(null);
-    const [completedOrders, setCompletedOrders] = useState(null);
-    const [pendingOrderShow, setPendingOrderShow] = useState(false);
-    const [completedOrderShow, setCompletedOrderShow] = useState(false);
-    const [fullOrderModal, setFullOrderModal] = useState(false);
-    const [fullOrder, setFullOrder] = useState(null);
+    const { user,setUser } = useContext(myContext);
+    const [pendingOrders, setPendingOrders] = useState(null);// refers to the object of currently pending order
+    const [completedOrders, setCompletedOrders] = useState(null); // refers to the array of completed or cancelled order
 
-    const [image, setImage] = useState(null);
-    const [crop, setCrop] = useState({ x: 0, y: 0 });
-    const [zoom, setZoom] = useState(1);
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-    const [showCropper, setShowCropper] = useState(false);
-    const [previewUrl, setPreviewUrl] = useState("https://placehold.co/100");
 
-    const onCropComplete = useCallback((_, croppedPixels) => {
-        setCroppedAreaPixels(croppedPixels);
-    }, []);
+    const [pendingOrderShow,setPendingOrderShow]=useState(false) //to show pending order
+    const [completedOrderShow,setCompletedOrderShow]=useState(false)//to show the table of completed or cancelled orders
+    const [fullOrderModal,setFullOrderModal]=useState(false) // to show the specific complete order in a modal
+    const [fullOrder,setFullOrder]=useState(null) // refers to the oject of complete order we are showing in complete modal
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImage(URL.createObjectURL(file));
-            setShowCropper(true);
-        }
-    };
-
-    const uploadCroppedImage = async () => {
-        const croppedBlob = await getCroppedImg(image, croppedAreaPixels);
-        const formData = new FormData();
-        formData.append("file", croppedBlob, "cropped.jpg");
-
-        const res = await fetch("/api/upload", {
-            method: "POST",
-            body: formData,
-        });
-
-        if (res.ok) {
-            const data = await res.json();
-            setPreviewUrl(data.imageUrl); // if server returns uploaded image path
-            setShowCropper(false);
-        }
-    };
-
-    useEffect(() => {
+    useEffect(()=>{
         fetch(`/api/order/orders/${user.userId}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setPendingOrders(data.pendingOrders);
-                setCompletedOrders(data.completedOrders);
-            })
-            .catch((error) => console.log(error));
-    }, []);
+        .then(res=>res.json())
+        .then(data=>{
+                    setPendingOrders(data.pendingOrders);
+                    setCompletedOrders(data.completedOrders);
+                    console.log(data)
+                    })
+        .catch(error=>{console.log(error)})
+    },[])
 
-    const showModalFN = (id, status) => {
-        if (status !== "Pending")
-            setFullOrder(completedOrders.find((el) => el._id === id));
-        else setFullOrder(pendingOrders.find((el) => el._id === id));
-        setFullOrderModal(true);
-    };
+    useEffect(()=>{
+        console.log(user)
+    },[user])   
 
-    const completeleModalProps = {
-        fullOrderModal,
-        setFullOrderModal,
-        fullOrder,
-        setFullOrder,
-    };
+    useEffect(()=>{
+        if(completedOrders){
+            completedOrders.forEach((complete)=>{
+            console.log("completed")
+            complete.orderedItems.forEach((order,index) => { 
+                console.log(order._id,order.itemId,order.itemName,order.itemPrice,order.itemQuantity)
+        })})}
+    
+    },[])
 
+    useEffect(()=>{
+        if(pendingOrders){
+            console.log("pending")
+            pendingOrders.orderedItems.forEach((order,index) => { 
+                console.log(order._id,order.itemId,order.itemName,order.itemPrice,order.itemQuantity)
+        })}
+    },[])
+
+    const showModalFN=(id,status)=>{
+            if(status!="Pending")
+                setFullOrder(completedOrders.find((element)=>{return element._id==id}))
+            else{
+                setFullOrder(pendingOrders.find((element)=>{return element._id==id}))
+
+                //qr code to be shown
+
+            }
+            setFullOrderModal(true)
+    }
+
+    const completeleModalProps={fullOrderModal,setFullOrderModal,fullOrder,setFullOrder}
     return (
         <>
             <div className="profile">
                 <div className="profileDetails">
-                    <label htmlFor="profileUpload">
-                        <img
-                            src={previewUrl}
-                            alt="Profile"
-                            className="profilePic"
-                            style={{ cursor: "pointer" }}
-                        />
-                    </label>
-                    <input
-                        id="profileUpload"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        style={{ display: "none" }}
-                    />
+
+                    <ImageUploader user={user} setUser={setUser}/>
+
                     <p>Name: {user?.name || "N/A"}</p>
                     <p>Department: {user?.department || "N/A"}</p>
                     <p>Semester: {user?.semester || "N/A"}</p>
                 </div>
-            </div>
-
-            {showCropper && (
-                <div className="crop-container">
-                    <Cropper
-                        image={image}
-                        crop={crop}
-                        zoom={zoom}
-                        aspect={1}
-                        onCropChange={setCrop}
-                        onCropComplete={onCropComplete}
-                        onZoomChange={setZoom}
-                    />
-                    <button onClick={uploadCroppedImage}>Upload</button>
+                <div className="profileQr">
+                    <h2>QR Code</h2>
+                    <img src="https://placehold.co/100" alt="QR Code" className="qrCode" />
                 </div>
+            </div>
+    
+            {pendingOrderShow ? (
+                <button className="toggleBtn" onClick={() => setPendingOrderShow(false)}>Hide Pending Orders</button>
+            ) : (
+                <button className="toggleBtn" onClick={() => setPendingOrderShow(true)}>Show Pending Orders</button>
             )}
-
-            {/* Pending Orders Toggle */}
-            <button className="toggleBtn" onClick={() => setPendingOrderShow(!pendingOrderShow)}>
-                {pendingOrderShow ? "Hide Pending Orders" : "Show Pending Orders"}
-            </button>
-
-            {pendingOrderShow && (
+    
+            {pendingOrderShow ? (
                 <div className="pendingOrders">
                     <h3>Pending Orders</h3>
                     <table className="orderTable">
@@ -131,28 +97,37 @@ function Profile() {
                             </tr>
                         </thead>
                         <tbody>
-                            {pendingOrders.map((order, i) => (
-                                <tr key={order._id}>
-                                    <td>{order._id}</td>
-                                    <td>{order.status}</td>
-                                    <td>
-                                        <button className="orderBtn" onClick={() => showModalFN(order._id, order.status)}>
-                                            Show
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {pendingOrders.map((order, index) => {
+                                if (order)
+                                    return (
+                                        <tr key={order._id}>
+                                            <td>{order._id}</td>
+                                            <td>{order.status}</td>
+                                            <td><button className="orderBtn" onClick={() => { showModalFN(order._id, order.status) }}>Show</button></td>
+                                        </tr>
+                                    );
+                                else
+                                    return (
+                                        <tr key={index}>
+                                            <td>{"ID not found"}</td>
+                                            <td>{"Name"}</td>
+                                            <td>{"Price"}</td>
+                                            <td>{"Quantity"}</td>
+                                        </tr>
+                                    );
+                            })}
                         </tbody>
                     </table>
                 </div>
+            ) : null}
+    
+            {completedOrderShow ? (
+                <button className="toggleBtn" onClick={() => setCompletedOrderShow(false)}>Hide Completed Orders</button>
+            ) : (
+                <button className="toggleBtn" onClick={() => setCompletedOrderShow(true)}>Show Completed Orders</button>
             )}
-
-            {/* Completed Orders Toggle */}
-            <button className="toggleBtn" onClick={() => setCompletedOrderShow(!completedOrderShow)}>
-                {completedOrderShow ? "Hide Completed Orders" : "Show Completed Orders"}
-            </button>
-
-            {completedOrderShow && (
+    
+            {completedOrderShow ? (
                 <div className="completedOrders">
                     <h3>Completed Orders</h3>
                     <table className="orderTable">
@@ -164,25 +139,37 @@ function Profile() {
                             </tr>
                         </thead>
                         <tbody>
-                            {completedOrders.map((order, i) => (
-                                <tr key={order._id}>
-                                    <td>{order._id}</td>
-                                    <td>{order.status}</td>
-                                    <td>
-                                        <button className="orderBtn" onClick={() => showModalFN(order._id, order.status)}>
-                                            Show
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {completedOrders.map((order, index) => {
+                                if (order)
+                                    return (
+                                        <tr key={order._id}>
+                                            <td>{order._id}</td>
+                                            <td>{order.status}</td>
+                                            <td><button className="orderBtn" onClick={() => { showModalFN(order._id, order.status) }}>Show</button></td>
+                                        </tr>
+                                    );
+                                else
+                                    return (
+                                        <tr key={index}>
+                                            <td>{"ID not found"}</td>
+                                            <td>{"Name"}</td>
+                                            <td>{"Price"}</td>
+                                            <td>{"Quantity"}</td>
+                                        </tr>
+                                    );
+                            })}
                         </tbody>
                     </table>
                 </div>
-            )}
-
-            {fullOrderModal && <FullOrderModal {...completeleModalProps} />}
+            ) : null}
+    
+            {fullOrderModal ? <FullOrderModal {...completeleModalProps} /> : null}
         </>
     );
+    
+
+
+
 }
 
 export default Profile;

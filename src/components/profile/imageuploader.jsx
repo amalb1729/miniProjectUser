@@ -1,62 +1,76 @@
-import { useState, useCallback } from "react";
-import Cropper from "react-easy-crop";
-import getCroppedImg from "./cropImage";
-import "./styles.css";
 
-function ImageUploader({ onClose }) {
-  const [image, setImage] = useState(null);
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+import { IKContext, IKImage, IKUpload } from 'imagekitio-react';
+import { useEffect, useState } from 'react';
 
-  const onCropComplete = useCallback((_, croppedPixels) => {
-    setCroppedAreaPixels(croppedPixels);
-  }, []);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) setImage(URL.createObjectURL(file));
+function ImageUploader({user,setUser}){
+
+const [url,setUrl]=useState(user.url)
+const [imageKey, setImageKey] = useState(Date.now());
+
+const authenticator =  async () => {
+    try {
+        const response = await fetch('/api/student/uploadCheck');
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        const { signature, expire, token } = data;
+        return { signature, expire, token };
+    } catch (error) {
+        throw new Error(`Authentication request failed: ${error.message}`);
+    }
+};
+
+const onError = err => {
+    console.log("Error", err);
   };
+  
+const onSuccess = async(res) => {
+    console.log("Success", res);
+    console.log(res.filePath);
+    try {
+        const response = await fetch(`/api/student/upload/${user.userId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url:res.filePath })
+        });
+        const data=await response.json()
+        console.log(data)
+        setUrl(data.url)
+        setImageKey(Date.now());
+    }catch (error) {
+        console.log("❌ Error uploading image",error);
+    }
+}
 
-  const uploadCroppedImage = async () => {
-    const croppedBlob = await getCroppedImg(image, croppedAreaPixels);
-    const formData = new FormData();
-    formData.append("file", croppedBlob, "cropped.jpg");
+useEffect(()=>{
+    sessionStorage.setItem('userInfo', JSON.stringify(user));
+},[url])
 
-    await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
+useEffect(() => {
+    if (user?.url) { // Add a check to ensure user and user.url exist
+      setUrl(user.url);
+    }
+  }, [user?.url]);
 
-    alert("Image uploaded successfully");
-    if (onClose) onClose();
-  };
 
-  return (
-    <div className="image-uploader-container">
-      {!image ? (
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-      ) : (
+
+    return(
         <>
-          <div className="cropper-container">
-            <Cropper
-              image={image}
-              crop={crop}
-              zoom={zoom}
-              aspect={1}
-              onCropChange={setCrop}
-              onCropComplete={onCropComplete}
-              onZoomChange={setZoom}
-            />
-          </div>
-          <div className="crop-buttons">
-            <button onClick={uploadCroppedImage}>Upload</button>
-            <button onClick={() => setImage(null)}>Cancel</button>
-          </div>
+        <IKContext publicKey={import.meta.env.VITE_PUBLIC_PUBLIC_KEY} urlEndpoint={import.meta.env.VITE_PUBLIC_URL_ENDPOINT} authenticator={authenticator} >
+            <IKImage   key={imageKey} path={url} urlEndpoint={import.meta.env.VITE_PUBLIC_URL_ENDPOINT} onError={(e) => (e.target.src = "https://placehold.co/100")} />
+            <IKUpload  onError={onError} onSuccess={onSuccess} folder={"/users"}/>
+        </IKContext>
         </>
-      )}
-    </div>
-  );
+
+
+    )
+
+
+
 }
 
 export default ImageUploader;

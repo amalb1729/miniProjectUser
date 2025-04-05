@@ -4,6 +4,9 @@ import { myContext } from "../../App";
 import ConfirmModal from "../modal/confirmModal";
 import { useRef } from "react";
 
+import { IKImage } from 'imagekitio-react';
+
+
 function Store() {
   const { isLoginOpen, setLoginOpen, isLoggedIn, user } = useContext(myContext);
   const [items, setItems] = useState([]);
@@ -150,10 +153,16 @@ function Store() {
 
       {orderMessage && <p className="order-message">{orderMessage}</p>}
 
+
       <div className="cardContainer">
         {filterItems.map((item,index) => (
           <div className="card" key={item._id} ref={(el) => (itemRefs.current[item._id] = el)}>
-            <img src={`/api/images/${item.name}.jpg`}  onError={(e) => (e.target.src = "https://placehold.co/100")} alt={item.name} />
+            {/* <img src={`/api/images/${item.name}.jpg`}  onError={(e) => (e.target.src = "https://placehold.co/100")} alt={item.name} /> */}
+            <IKImage
+              path={`images/${item.name}.jpg`}
+              urlEndpoint={import.meta.env.VITE_PUBLIC_URL_ENDPOINT}
+              onError={(e) => (e.target.src = "https://placehold.co/100")} alt={item.name}
+            />
             <h3>{item.name}</h3>
             <p>{`₹${item.price}`}</p>
             {/* <p>{`Stock: ${item.stock}`}</p> */}
@@ -175,6 +184,7 @@ function Store() {
         ))}
       </div>
     </div>
+    
 
     {confirmOrder?(<ConfirmModal {...confirmProps}/>):null}
     </>
