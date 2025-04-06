@@ -5,6 +5,7 @@ import FullOrderModal from "../modal/fullOrderModal";
 import ImageUploader from "./imageUploader"
 import { IKImage } from 'imagekitio-react';
 import { use } from "react";
+import QRGenerator from "./QRGenerator";
 function Profile() {
     const { user,setUser } = useContext(myContext);
     const [pendingOrders, setPendingOrders] = useState(null);// refers to the object of currently pending order
@@ -54,9 +55,6 @@ function Profile() {
                 setFullOrder(completedOrders.find((element)=>{return element._id==id}))
             else{
                 setFullOrder(pendingOrders.find((element)=>{return element._id==id}))
-
-                //qr code to be shown
-
             }
             setFullOrderModal(true)
     }
@@ -72,10 +70,6 @@ function Profile() {
                     <p>Name: {user?.name || "N/A"}</p>
                     <p>Department: {user?.department || "N/A"}</p>
                     <p>Semester: {user?.semester || "N/A"}</p>
-                </div>
-                <div className="profileQr">
-                    <h2>QR Code</h2>
-                    <img src="https://placehold.co/100" alt="QR Code" className="qrCode" />
                 </div>
             </div>
     

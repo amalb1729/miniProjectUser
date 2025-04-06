@@ -1,7 +1,7 @@
 import Modal from "./Modal";
 import { useEffect, useState } from "react";
 import "./fullOrderModal.css"
-
+import QRGenerator from "../profile/QRGenerator"
 function FullOrderModal({ fullOrderModal, setFullOrderModal, fullOrder, setFullOrder }) {
 
     const [total,setTotal]=useState(0);
@@ -16,7 +16,7 @@ function FullOrderModal({ fullOrderModal, setFullOrderModal, fullOrder, setFullO
                     <table className="order-table">
                         <thead>
                             <tr>
-                                <th>Item ID</th>
+                                {/* <th>Item ID</th> */}
                                 <th>Item Name</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
@@ -30,7 +30,7 @@ function FullOrderModal({ fullOrderModal, setFullOrderModal, fullOrder, setFullO
 
                                 
                                 <tr key={order?._id || index} className="order-row">
-                                    <td>{order?.itemId || "ID not found"}</td>
+                                    {/* <td>{order?.itemId || "ID not found"}</td> */}
                                     <td>{order?.itemName || "Name not found"}</td>
                                     <td>{order?.itemPrice || "Price not found"}</td>
                                     <td>{order?.itemQuantity || "Quantity not found"}</td>
@@ -39,10 +39,13 @@ function FullOrderModal({ fullOrderModal, setFullOrderModal, fullOrder, setFullO
                             
                             })}
                         
-                            <tr><td colSpan="4">Grand Total</td>
+                            <tr><td colSpan="3">Grand Total</td>
                             <td>{total}</td></tr>
                         </tbody>
                     </table>
+                    <div className="qrgenerator">
+                    {fullOrder.status=="Pending" && <QRGenerator orderId={fullOrder?._id} />}
+                    </div>
             </Modal>
         </>
     );
