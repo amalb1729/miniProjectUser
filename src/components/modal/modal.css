@@ -5,23 +5,27 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 20px;
 }
 
 /* Base modal container */
 .modalContainer {
     background-color: white;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px;
     position: relative;
     min-width: 300px;
     max-width: 90%;
     max-height: 90vh;
-    
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 /* Special handling for full order modal */

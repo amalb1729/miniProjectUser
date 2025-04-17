@@ -88,8 +88,8 @@ function LoginModal() {
                 {message && <p className={message.includes("✅") ? "success" : "error"}>{message}</p>}
                 
                 <div className="options">
-                    <button onClick={() => { setLoginOpen(false); setSignupOpen(true); setMessage(null); }}>Register Now</button>
                     <button className="submit" onClick={checkpw}>Submit</button>
+                    <button onClick={() => { setLoginOpen(false); setSignupOpen(true); setMessage(null); }}>Register Now</button>
                 </div>
             </div>
         </Modal>

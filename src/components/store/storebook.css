@@ -481,9 +481,9 @@
   }
 
   .search-container {
-    width: 95%;
-    padding: 0 10px;
-    margin: 10px auto;
+    width: 80%;
+    
+    margin-left: 10px;
   }
 
   .search-input {
