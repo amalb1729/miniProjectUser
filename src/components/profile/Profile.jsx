@@ -85,8 +85,9 @@ function Profile() {
                     <table className="orderTable">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
+                                <th>Items</th>
                                 <th>Status</th>
+                                <th>Total</th>
                                 <th>Show</th>
                             </tr>
                         </thead>
@@ -95,18 +96,19 @@ function Profile() {
                                 if (order)
                                     return (
                                         <tr key={order._id}>
-                                            <td>{order._id}</td>
+                                            <td>{order.orderedItems.map((item) => item.itemName).join(", ")}</td>
                                             <td>{order.status}</td>
+                                            <td>{order.orderedItems.reduce((total, item) => total + item.itemPrice * item.itemQuantity, 0)}</td>
                                             <td><button className="orderBtn" onClick={() => { showModalFN(order._id, order.status) }}>Show</button></td>
                                         </tr>
                                     );
                                 else
                                     return (
                                         <tr key={index}>
-                                            <td>{"ID not found"}</td>
-                                            <td>{"Name"}</td>
-                                            <td>{"Price"}</td>
-                                            <td>{"Quantity"}</td>
+                                            <td>{"Items not found"}</td>
+                                            <td>{"Status"}</td>
+                                            <td>{"Total"}</td>
+                                            <td>{"Show"}</td>
                                         </tr>
                                     );
                             })}
@@ -127,8 +129,9 @@ function Profile() {
                     <table className="orderTable">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
+                                <th>Items</th>
                                 <th>Status</th>
+                                <th>Total</th>
                                 <th>Show</th>
                             </tr>
                         </thead>
@@ -137,18 +140,19 @@ function Profile() {
                                 if (order)
                                     return (
                                         <tr key={order._id}>
-                                            <td>{order._id}</td>
+                                            <td>{order.orderedItems.map((item) => item.itemName).join(", ")}</td>
                                             <td>{order.status}</td>
+                                            <td>{order.orderedItems.reduce((total, item) => total + item.itemPrice * item.itemQuantity, 0)}</td>
                                             <td><button className="orderBtn" onClick={() => { showModalFN(order._id, order.status) }}>Show</button></td>
                                         </tr>
                                     );
                                 else
                                     return (
                                         <tr key={index}>
-                                            <td>{"ID not found"}</td>
-                                            <td>{"Name"}</td>
-                                            <td>{"Price"}</td>
-                                            <td>{"Quantity"}</td>
+                                            <td>{"Items not found"}</td>
+                                            <td>{"Status"}</td>
+                                            <td>{"Total"}</td>
+                                            <td>{"Show"}</td>
                                         </tr>
                                     );
                             })}

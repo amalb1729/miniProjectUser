@@ -155,33 +155,66 @@ function Store() {
 
 
       <div className="cardContainer">
-        {filterItems.map((item,index) => (
-          <div className="card" key={item._id} ref={(el) => (itemRefs.current[item._id] = el)}>
-            {/* <img src={`/api/images/${item.name}.jpg`}  onError={(e) => (e.target.src = "https://placehold.co/100")} alt={item.name} /> */}
-            <IKImage
-              path={item.pictureURL}
-              urlEndpoint={import.meta.env.VITE_PUBLIC_URL_ENDPOINT}
-              onError={(e) => (e.target.src = "https://placehold.co/100")} alt={item.name}
-            />
-            <h3>{item.name}</h3>
-            <p>{`₹${item.price}`}</p>
-            {/* <p>{`Stock: ${item.stock}`}</p> */}
-
-            {/* {item.stock > 0 ? ( */}
-              <>
-                <div className="quantity-selector">
-                  <button onClick={() => decreaseQuantity(item._id)}>-</button>
-                  <span>{quantities[item._id]}</span>
-                  <button onClick={() => increaseQuantity(item._id)}>+</button>
+        {filterItems.length > 0 ? (
+          filterItems.map((item, index) => (
+            <div className="card" key={item._id} ref={(el) => (itemRefs.current[item._id] = el)}>
+              <div className="card-image-container">
+                <IKImage
+                  path={item.pictureURL}
+                  urlEndpoint={import.meta.env.VITE_PUBLIC_URL_ENDPOINT}
+                  onError={(e) => (e.target.src = "https://placehold.co/200x200/f0f0f0/666666?text=No+Image")}
+                  alt={item.name}
+                  className="card-image"
+                  loading="lazy"
+                  transformation={[{
+                    height: "200",
+                    width: "200"
+                  }]}
+                />
+              </div>
+              
+              <div className="card-content">
+                <h3 className="item-name">{item.name}</h3>
+                <div className="price-tag">
+                  <span className="currency">₹</span>
+                  <span className="amount">{item.price.toLocaleString()}</span>
                 </div>
-                <p>{`Total: ₹${item.price * quantities[item._id]}`}</p>
-                <button className="bookBtn" onClick={() =>confirmFn(item._id)}>Add to cart</button>
-              </>
-             {/* ) : (
-               <p className="out-of-stock">❌ Out of Stock</p>
-            )} */}
+                
+                <div className="quantity-selector">
+                  <button 
+                    className="quantity-btn"
+                    onClick={() => decreaseQuantity(item._id)}
+                  >
+                    -
+                  </button>
+                  <span>{quantities[item._id]}</span>
+                  <button 
+                    className="quantity-btn"
+                    onClick={() => increaseQuantity(item._id)}
+                  >
+                    +
+                  </button>
+                </div>
+                
+                <div className="total-price">
+                  Total: <span>₹{(item.price * quantities[item._id]).toLocaleString()}</span>
+                </div>
+                
+                <button className="bookBtn" onClick={() => confirmFn(item._id)}>
+                  <span className="btn-icon">🛒</span>
+                  <span>Add to cart</span>
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="no-items-found">
+            <div className="no-items-icon">🔍</div>
+            <h3>No items found</h3>
+            <p>Try a different search term or browse all items</p>
+            <button className="reset-search" onClick={() => setQuery("")}>Show all items</button>
           </div>
-        ))}
+        )}
       </div>
     </div>
     

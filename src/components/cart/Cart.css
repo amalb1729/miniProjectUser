@@ -1,55 +1,162 @@
 .cart-container {
-    width: 80%;
-    margin: auto;
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
     text-align: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cart-container h2 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.8rem;
+}
+
+.cart-container h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 1.5rem 0;
+    text-align: right;
+    padding-right: 1rem;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 th, td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #eaeaea;
 }
 
 th {
-    background: #f4f4f4;
+    background: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 button {
-    padding: 5px 10px;
-    margin: 0 5px;
+    padding: 0.5rem 0.8rem;
+    margin: 0 0.3rem;
     border: none;
     cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-weight: 500;
 }
 
 button:hover {
-    opacity: 0.8;
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.quantity-btn {
+    background-color: #e9ecef;
+    color: #495057;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 0;
 }
 
 .remove-btn {
-    background: red;
+    background: #dc3545;
     color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.remove-btn:hover {
+    background: #c82333;
+}
+
+.checkout-btn, .save-btn {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    margin: 1rem 0.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 .checkout-btn {
-    background: green;
+    background: #28a745;
     color: white;
-    padding: 10px 15px;
-    margin-top: 20px;
+}
+
+.checkout-btn:hover {
+    background: #218838;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.save-btn {
+    background: #007bff;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #0069d9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .fade-message {
     opacity: 0;
-    transition: opacity 1s ease-in-out;
-    color: blue;
-    font-weight: bold;
-    margin-top: 10px;
+    transition: opacity 0.5s ease-in-out;
+    color: #0056b3;
+    font-weight: 600;
+    margin: 1rem 0;
+    padding: 0.8rem;
+    background-color: #e7f5ff;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
 }
 
 .fade-message.show {
     opacity: 1;
+}
+
+.empty-cart-message {
+    padding: 2rem;
+    color: #6c757d;
+    font-size: 1.2rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 2rem 0;
 }

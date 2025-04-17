@@ -99,56 +99,73 @@ function Cart() {
 
     return (
         <div className="cart-container">
-            <h2>Your Cart</h2>
+            <h2>Your Shopping Cart</h2>
 
-            {message && <p className={`fade-message ${fade ? "show" : ""}`}>{message}</p>}
+            {message && <div className={`fade-message ${fade ? "show" : ""}`}>{message}</div>}
 
             {myCart.length > 0 ? (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Stock</th>
-                            <th>Total</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {myCart.map((item) => (
-                            <tr key={item.itemId}>
-                                <td>{item.itemName}</td>
-                                <td>₹{item.itemPrice}</td>
-                                <td>
-                                    <button
-                                        onClick={() => decreaseQuantity(item.itemId, item.itemQuantity)}
-                                    >-</button>
-                                    {item.itemQuantity}
-                                    <button
-                                        onClick={() => increaseQuantity(item.itemId, item.itemQuantity)}
-                                        disabled={item.itemQuantity >= (liveStock[item.itemId] || 0)}
-                                    >+</button>
-                                </td>
-                                <td>{liveStock[item.itemId] || "Out Of Stock"}</td>
-                                <td>₹{item.itemPrice * item.itemQuantity}</td>
-                                <td>
-                                    <button className="remove-btn" onClick={() => removeItem(item.itemId)}>Remove</button>
-                                </td>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Available</th>
+                                <th>Subtotal</th>
+                                <th>Action</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {myCart.map((item) => (
+                                <tr key={item.itemId}>
+                                    <td>{item.itemName}</td>
+                                    <td>₹{item.itemPrice.toLocaleString()}</td>
+                                    <td>
+                                        <div className="quantity-control">
+                                            <button
+                                                className="quantity-btn"
+                                                onClick={() => decreaseQuantity(item.itemId, item.itemQuantity)}
+                                            >-</button>
+                                            <span>{item.itemQuantity}</span>
+                                            <button
+                                                className="quantity-btn"
+                                                onClick={() => increaseQuantity(item.itemId, item.itemQuantity)}
+                                                disabled={item.itemQuantity >= (liveStock[item.itemId] || 0)}
+                                            >+</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {liveStock[item.itemId] ? (
+                                            <span>{liveStock[item.itemId]}</span>
+                                        ) : (
+                                            <span style={{ color: "#dc3545", fontWeight: "bold" }}>Out Of Stock</span>
+                                        )}
+                                    </td>
+                                    <td>₹{(item.itemPrice * item.itemQuantity).toLocaleString()}</td>
+                                    <td>
+                                        <button className="remove-btn" onClick={() => removeItem(item.itemId)}>Remove</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                    <h3>
+                        Total: ₹{myCart.reduce((sum, element) => sum + element.itemPrice * element.itemQuantity, 0).toLocaleString()}
+                    </h3>
+
+                    <div className="cart-actions">
+                        <button className="checkout-btn" onClick={checkoutCart}>Proceed to Checkout</button>
+                        <button className="save-btn" onClick={()=>{saveCart(true)}}>Save Cart</button>
+                    </div>
+                </div>
             ) : (
-                <p>Your cart is empty</p>
+                <div className="empty-cart-message">
+                    <p>Your cart is empty</p>
+                    <p>Add items to your cart to see them here</p>
+                </div>
             )}
-
-            <h3>
-                Total: ₹{myCart.reduce((sum, element) => sum + element.itemPrice * element.itemQuantity, 0)}
-            </h3>
-
-            <button className="checkout-btn" onClick={checkoutCart}>Proceed to Checkout</button>
-            <button className="save-btn" onClick={()=>{saveCart(true)}}>Save Cart</button>
         </div>
     );
 }
