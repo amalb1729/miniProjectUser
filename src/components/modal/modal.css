@@ -25,7 +25,7 @@
     max-width: 90%;
     max-height: 90vh;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    overflow-y:scroll;
 }
 
 /* Special handling for full order modal */
@@ -34,7 +34,7 @@
     max-width: 1200px;
     margin: 0;
     padding: 20px;
-    overflow-y: auto;
+    overflow-y:scroll;;
 }
 
 /* Close button */
@@ -42,12 +42,14 @@
     position: absolute;
     right: 10px;
     top: 10px;
-    background: none;
+    background: red;
+    color: white;
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 4px;
+    z-index: 2;
 }
 
 .closeBtn:hover {
@@ -65,5 +67,6 @@
     .modalContainer {
         width: 90%;
         min-width: auto;
+        overflow-y:scroll;
     }
 }

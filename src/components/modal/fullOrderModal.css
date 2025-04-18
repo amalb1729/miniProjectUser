@@ -9,6 +9,7 @@
     margin: 0 auto;
     position: relative;
     background-color: #ffffff;
+    overflow-y: auto;
 }
 
 .order-title {
@@ -243,6 +244,7 @@
 
     .order-content {
         margin-bottom: 1rem;
+        overflow-x: auto;
     }
 
     .qr-section {
