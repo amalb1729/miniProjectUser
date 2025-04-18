@@ -84,7 +84,7 @@ function Store() {
 
       const data = await response.json();
       if (response.ok) {
-        setOrderMessage(`✅ item added to cart: ${quantities[bookItemId]} item(s) booked`);
+        setOrderMessage(`✅ item added to cart: ${quantities[bookItemId]}`);
         setItems((prevItems) =>
           prevItems.map(item =>
             item._id === bookItemId ? { ...item, stock: item.stock - quantities[bookItemId] } : item

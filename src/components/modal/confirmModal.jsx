@@ -11,7 +11,7 @@ function ConfirmModal({confirmOrder,setConfirmOrder,setBookItemId,bookItemFn}){
         <>
         <Modal isOpen={confirmOrder} closeModal={()=>setConfirmOrder(false)}>
             <div className="confirm-modal">
-                <span className="confirm-message">Are you sure, you want to order this item?</span>
+                <span className="confirm-message">Are you sure, you want to add this item to cart?</span>
                 <div className="confirm-buttons">
                     <button 
                         className="confirm-btn cancel"
