@@ -12,6 +12,7 @@ import { useState } from "react"
 import Loginmodal from "./components/modal/loginmodal"
 import Signupmodal from "./components/modal/signupmodal"
 import Cart from "./components/cart/Cart"
+import PrintUpload from "./components/print/PrintUpload"
 
 export const myContext=createContext();
 
@@ -50,7 +51,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/book" element={<Store />} />
-            <Route path="/print" element={<Filein />} />
+            <Route path="/print" element={<PrintUpload />} />
             <Route path="/profile" element={isLoggedIn?<Profile />:<Navigate to="/" />} />
             <Route path="/cart" element={isLoggedIn?<Cart />:<Navigate to="/" />} />
             <Route path="/*" element={<Navigate to="/" />} />
