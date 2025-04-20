@@ -134,7 +134,7 @@ function Cart() {
 };
 
     useEffect(()=>{
-        if(myCart.length < 1){
+        if(myCart?.length < 1){
             saveCart(false);
         }
     },[myCart])
@@ -166,7 +166,8 @@ function Cart() {
             });
         }
         const data = await response.json();
-        setMyCart(data.updatedCart.userCart);
+        console.log(data)
+        setMyCart(data.updatedCart?.userCart || null );
         fetchLiveStock();
         setMessage(data.message);
         setFade(true); // Start fade-in effect
@@ -182,7 +183,7 @@ function Cart() {
 
             {message && <div className={`fade-message ${fade ? "show" : ""}`}>{message}</div>}
 
-            {myCart.length > 0 ? (
+            {myCart?.length > 0 ? (
                 <div>
                     <table>
                         <thead>
