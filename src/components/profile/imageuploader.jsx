@@ -1,28 +1,40 @@
 import { IKContext, IKImage, IKUpload } from 'imagekitio-react';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
+import { myContext } from '../../App';
 
 function ImageUploader({user,setUser}){
+    const { accessToken, refreshRequest } = useContext(myContext);
     const [url,setUrl]=useState(user.url)
     const [imageKey, setImageKey] = useState(Date.now());
     const [isUploading, setIsUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const ikUploadRef = useRef(null);
 
-    const authenticator = async () => {
-        try {
-            const response = await fetch('/api/student/uploadCheck');
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Request failed with status ${response.status}: ${errorText}`);
-            }
-
-            const data = await response.json();
-            const { signature, expire, token } = data;
-            return { signature, expire, token };
-        } catch (error) {
-            throw new Error(`Authentication request failed: ${error.message}`);
+    const authenticator = async (tokens = accessToken) => {
+    try {
+        if (!tokens) {
+            tokens = await refreshRequest();
         }
-    };
+        let response = await fetch('/api/student/uploadCheck', {
+            headers: { "Authorization": `Bearer ${tokens}` }
+        });
+        if (response.status === 401) {
+            tokens = await refreshRequest();
+            response = await fetch('/api/student/uploadCheck', {
+                headers: { "Authorization": `Bearer ${tokens}` }
+            });
+        }
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+        }
+        const data = await response.json();
+        const { signature, expire, token} = data;
+        return { signature, expire, token};
+    } catch (error) {
+        throw new Error(`Authentication request failed: ${error.message}`);
+    }
+};
 
     const onError = err => {
         console.log("Error", err);
@@ -30,30 +42,45 @@ function ImageUploader({user,setUser}){
         setUploadProgress(0);
     };
   
-    const onSuccess = async(res) => {
-        console.log("Success", res);
-        setIsUploading(false);
-        setUploadProgress(100);
-        
-        try {
-            const response = await fetch(`/api/student/upload/${user.userId}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url:res.filePath })
-            });
-            const data = await response.json()
-            console.log(data)
-            setUrl(data.url)
-            setImageKey(Date.now());
-            
-            // Reset progress after a delay
-            setTimeout(() => {
-                setUploadProgress(0);
-            }, 2000);
-        } catch (error) {
-            console.log("❌ Error uploading image", error);
+    const onSuccess = async (res, tokens = accessToken) => {
+    console.log("Success", res);
+    setIsUploading(false);
+    setUploadProgress(100);
+    try {
+        if (!tokens) {
+            tokens = await refreshRequest();
         }
-    };
+        let response = await fetch(`/api/student/upload/${user.userId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${tokens}`
+            },
+            body: JSON.stringify({ url: res.filePath })
+        });
+        if (response.status === 401) {
+            tokens = await refreshRequest();
+            response = await fetch(`/api/student/upload/${user.userId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${tokens}`
+                },
+                body: JSON.stringify({ url: res.filePath })
+            });
+        }
+        const data = await response.json();
+        console.log(data);
+        setUrl(data.url);
+        setImageKey(Date.now());
+        // Reset progress after a delay
+        setTimeout(() => {
+            setUploadProgress(0);
+        }, 2000);
+    } catch (error) {
+        console.log("❌ Error uploading image", error);
+    }
+};
 
     const onUploadStart = () => {
         setIsUploading(true);

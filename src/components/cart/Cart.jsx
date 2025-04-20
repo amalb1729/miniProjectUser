@@ -3,7 +3,7 @@ import "./Cart.css"; // Import the CSS file
 import { myContext } from "../../App";
 
 function Cart() {
-    const { user } = useContext(myContext);
+    const { user,accessToken,refreshRequest } = useContext(myContext);
     const [myCart, setMyCart] = useState([]);
     const [cartId, setCartId] = useState("");
     const [message, setMessage] = useState(""); // For showing the checkout message
@@ -11,19 +11,58 @@ function Cart() {
     const [liveStock, setLiveStock] = useState({}); // Stores real-time stock
 
     useEffect(() => {
-        fetch(`/api/order/cart/${user.userId}`)
-            .then(res => res.json())
-            .then(data => {
+        const fetchCart = async (token = accessToken) => {
+            try {
+                if (!token) {
+                    token = await refreshRequest();
+                }
+                let res = await fetch(`/api/order/cart/${user.userId}`, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                
+                if (res.status === 401) {                                       
+                    token = await refreshRequest();
+                    res = await fetch(`/api/order/cart/${user.userId}`, {
+                        headers: { "Authorization": `Bearer ${token}` }
+                    });                   // Fetch live stock when the cart loads
+                }
+                
+                const data = await res.json();
                 setMyCart(data[0].userCart);
                 setCartId(data[0]._id);
-            });
+            } catch (error) {
+                console.error('Error fetching cart:', error);
+            }
+        };
 
-        fetchLiveStock(); // Fetch live stock when the cart loads
+        if (user && user.userId) {
+            fetchCart();
+            fetchLiveStock();
+        }
     }, []);
 
-    const fetchLiveStock = async () => {
+    const fetchLiveStock = async (token=accessToken) => {
         try {
-            const res = await fetch("/api/item/stock");
+            
+            if(!token){
+                token=await refreshRequest();
+            }
+            let res = await fetch("/api/item/stock",{
+                method:"GET",
+                headers:{"Authorization":`Bearer ${token}`}
+            });
+
+            if (res.status === 401) {                                       
+                const token=await refreshRequest();
+                res = await fetch("/api/item/stock",{
+                    method:"GET",
+                    headers:{"Authorization":`Bearer ${token}`}
+                });                  
+            }   
+            
+           
+
+
             const stockData = await res.json();
             // Convert array to object for quick lookup
             const stockMap = stockData.reduce((acc, item) => {
@@ -59,43 +98,83 @@ function Cart() {
         setMyCart(prev => prev.filter(element => element.itemId !== id));
     };
 
-    const saveCart = async (saving) => {
-        try {
-            console.log("Saving cart...");
-            const response=await fetch(`/api/order/saveCart/${cartId}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ myCart }),
-            });
-            if(saving){
-                const data=await response.json();
-                setMessage(data.message);
-                setFade(true); // Start fade-in effect
-                setTimeout(() => setFade(false), 3000); // Remove after 3 seconds
-            }
-        } catch (error) {
-            console.log(error);
+    const saveCart = async (saving, token = accessToken) => {
+    try {
+        if (!token) {
+            token = await refreshRequest();
         }
-    };
-
-    const checkoutCart = async () => {
-        try {
-            await saveCart(false);
-            const response = await fetch(`/api/order/toOrder/${cartId}`, {
+        let response = await fetch(`/api/order/saveCart/${cartId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ myCart }),
+        });
+        if (response.status === 401) {
+            token = await refreshRequest();
+            response = await fetch(`/api/order/saveCart/${cartId}`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify({ myCart }),
             });
+        }
+        if (saving) {
             const data = await response.json();
-            setMyCart(data.updatedCart.userCart);
-            fetchLiveStock();
             setMessage(data.message);
             setFade(true); // Start fade-in effect
             setTimeout(() => setFade(false), 3000); // Remove after 3 seconds
-        } catch (error) {
-            console.log(error);
         }
-    };
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+    useEffect(()=>{
+        if(myCart.length < 1){
+            saveCart(false);
+        }
+    },[myCart])
+
+    const checkoutCart = async (token = accessToken) => {
+    try {
+        await saveCart(false, token);
+        if (!token) {
+            token = await refreshRequest();
+        }
+        let response = await fetch(`/api/order/toOrder/${cartId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ myCart }),
+        
+        });
+        if (response.status === 401) {
+            token = await refreshRequest();
+            response = await fetch(`/api/order/toOrder/${cartId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ myCart }),
+            });
+        }
+        const data = await response.json();
+        setMyCart(data.updatedCart.userCart);
+        fetchLiveStock();
+        setMessage(data.message);
+        setFade(true); // Start fade-in effect
+        setTimeout(() => setFade(false), 3000); // Remove after 3 seconds
+    } catch (error) {
+        console.log(error);
+    }
+};
 
     return (
         <div className="cart-container">
@@ -156,7 +235,7 @@ function Cart() {
                     </h3>
 
                     <div className="cart-actions">
-                        <button className="checkout-btn" onClick={checkoutCart}>Proceed to Checkout</button>
+                        <button className="checkout-btn" onClick={()=>{checkoutCart()}}>Proceed to Checkout</button>
                         <button className="save-btn" onClick={()=>{saveCart(true)}}>Save Cart</button>
                     </div>
                 </div>

@@ -4,10 +4,9 @@ import "./profile.css";
 import FullOrderModal from "../modal/fullOrderModal";
 import ImageUploader from "./imageUploader"
 import { IKImage } from 'imagekitio-react';
-import { use } from "react";
 import QRGenerator from "./QRGenerator";
 function Profile() {
-    const { user,setUser } = useContext(myContext);
+    const { user, setUser, accessToken, refreshRequest } = useContext(myContext);
     const [pendingOrders, setPendingOrders] = useState(null);// refers to the object of currently pending order
     const [completedOrders, setCompletedOrders] = useState(null); // refers to the array of completed or cancelled order
 
@@ -17,16 +16,33 @@ function Profile() {
     const [fullOrderModal,setFullOrderModal]=useState(false) // to show the specific complete order in a modal
     const [fullOrder,setFullOrder]=useState(null) // refers to the oject of complete order we are showing in complete modal
 
-    useEffect(()=>{
-        fetch(`/api/order/orders/${user.userId}`)
-        .then(res=>res.json())
-        .then(data=>{
-                    setPendingOrders(data.pendingOrders);
-                    setCompletedOrders(data.completedOrders);
-                    console.log(data)
-                    })
-        .catch(error=>{console.log(error)})
-    },[])
+    useEffect(() => {
+    const fetchOrders = async (token = accessToken) => {
+        try {
+            if (!token) {
+                token = await refreshRequest();
+            }
+            let res = await fetch(`/api/order/orders/${user.userId}`, {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            if (res.status === 401) {
+                token = await refreshRequest();
+                res = await fetch(`/api/order/orders/${user.userId}`, {
+                    method: "GET",
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+            }
+            const data = await res.json();
+            setPendingOrders(data.pendingOrders);
+            setCompletedOrders(data.completedOrders);
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    fetchOrders();
+}, []);
 
     useEffect(()=>{
         console.log(user)

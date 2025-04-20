@@ -9,12 +9,29 @@ function Header() {
 
     const {setLoginOpen,setSignupOpen,isLoggedIn,setLoggedIn,setUser}=useContext(myContext)
     
-    const handleLogout = () => {
-        sessionStorage.removeItem('isLoggedIn');
-        sessionStorage.removeItem('userInfo');
-        setLoggedIn(false);
-        setUser(null);
-      };
+    const handleLogout = async () => {
+        try {
+            // Call the server's logout endpoint to clear the HTTP-only refreshToken cookie
+            const response = await fetch('/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include' // Important for cookies
+            });
+            
+            if (response.ok) {
+                // Clear local storage/session storage
+                sessionStorage.removeItem('isLoggedIn');
+                sessionStorage.removeItem('userInfo');
+                // Update state
+                setLoggedIn(false);
+                setUser(null);
+                console.log('Logged out successfully');
+            } else {
+                console.error('Logout failed');
+            }
+        } catch (error) {
+            console.error('Error during logout:', error);
+        }
+    };
 
     
     return (
@@ -40,7 +57,7 @@ function Header() {
                     <ul className="nav-list">
                         <li><NavLink to="/" className={({ isActive }) => isActive ? "act" : "inact"}>Home</NavLink></li>
                         <li><NavLink to="/Book" className={({ isActive }) => isActive ? "act" : "inact"}>Book Now</NavLink></li>
-                        <li><NavLink to="/Print" className={({ isActive }) => isActive ? "act" : "inact" }>Print Me</NavLink></li>
+                        {/* <li><NavLink to="/Print" className={({ isActive }) => isActive ? "act" : "inact" }>Print Me</NavLink></li> */}
 
                         {isLoggedIn &&
                             <>

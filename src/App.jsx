@@ -21,6 +21,24 @@ function App() {
   
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignupOpen, setSignupOpen] = useState(false);
+  const [accessToken,setAccessToken] =useState("");
+
+  const refreshRequest = async () => {
+    const res = await fetch("/api/auth/token", {
+        method: "POST",
+        credentials: "include",
+    });
+
+    if (!res.ok) {
+        throw new Error("Session expired");
+    }
+
+    const data = await res.json();
+    // Ensure accessToken is always a string
+    const tokenString = typeof data.accessToken === 'string' ? data.accessToken : String(data.accessToken);
+    setAccessToken(tokenString);
+    return tokenString;
+  };
 
   //const [isLoggedIn,setLoggedIn]=useState(false)
   //const [user, setUser] = useState(null);
@@ -41,7 +59,7 @@ function App() {
       
       <div className="app">
       
-      <myContext.Provider value={{isSignupOpen, setSignupOpen,isLoginOpen, setLoginOpen,isLoggedIn,setLoggedIn,user, setUser}}>
+      <myContext.Provider value={{isSignupOpen, setSignupOpen,isLoginOpen, setLoginOpen,isLoggedIn,setLoggedIn,user, setUser,accessToken,setAccessToken,refreshRequest}}>
 
         <Header />
 
@@ -50,7 +68,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/book" element={<Store />} />
-            <Route path="/print" element={<Filein />} />
+            {/* <Route path="/print" element={<Filein />} /> */}
             <Route path="/profile" element={isLoggedIn?<Profile />:<Navigate to="/" />} />
             <Route path="/cart" element={isLoggedIn?<Cart />:<Navigate to="/" />} />
             <Route path="/*" element={<Navigate to="/" />} />

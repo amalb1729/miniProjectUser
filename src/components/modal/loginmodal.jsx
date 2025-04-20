@@ -4,7 +4,7 @@ import { myContext } from "../../App";
 import "./log.css";
 
 function LoginModal() {
-    const { isLoginOpen, setLoginOpen, setSignupOpen, setLoggedIn, setUser } = useContext(myContext);
+    const { isLoginOpen, setLoginOpen, setSignupOpen, setLoggedIn, setUser,accessToken,setAccessToken } = useContext(myContext);
     const userRef = useRef(null);
     const passRef = useRef(null);
     const [message, setMessage] = useState("");
@@ -41,7 +41,9 @@ function LoginModal() {
             if (response.ok) {
                 setMessage("✅ Login Successful!");
                 setUser(data.user);
-
+                // Ensure accessToken is always a string
+                const tokenString = typeof data.accessToken === 'string' ? data.accessToken : String(data.accessToken);
+                setAccessToken(tokenString);
                 sessionStorage.setItem('isLoggedIn', 'true');
                 sessionStorage.setItem('userInfo', JSON.stringify(data.user));
 

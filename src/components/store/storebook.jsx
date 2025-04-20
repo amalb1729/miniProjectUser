@@ -6,21 +6,18 @@ import { useRef } from "react";
 
 import { IKImage } from 'imagekitio-react';
 
-
 function Store() {
-  const { isLoginOpen, setLoginOpen, isLoggedIn, user } = useContext(myContext);
+  const { accessToken, refreshRequest, isLoginOpen, setLoginOpen, isLoggedIn, user } = useContext(myContext);
   const [items, setItems] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [orderMessage, setOrderMessage] = useState(""); // Store order response
   const [confirmOrder,setConfirmOrder]=useState(false)
   const [bookItemId,setBookItemId]=useState(null);
 
-
   const itemRefs=useRef({});
 
   const [query,setQuery]=useState("")
   const [filterItems,setFilteredItems]=useState([])
-
 
   // Fetch items from backend
   useEffect(() => {
@@ -35,7 +32,6 @@ function Store() {
       })
       .catch((error) => console.error("Error fetching items:", error));
   },[]);
-
 
   useEffect(()=>{
     if(query.trim()==="")
@@ -54,7 +50,6 @@ function Store() {
     }));
   };
 
-
   const decreaseQuantity = (id) => {
     setQuantities((prev) => ({
       ...prev,
@@ -67,51 +62,67 @@ function Store() {
     setBookItemId(id)
   }
 
-  
   const bookItemFn = async () => {
     if (!isLoggedIn) {
       setLoginOpen(true);
       return;
     }
     if(bookItemId){
-      console.log("item bookded")
-    try {
-      const response = await fetch("/api/order/toCart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.userId, itemId: bookItemId, quantity: quantities[bookItemId] })
-      });
+      try {
+        let token = accessToken;
+        if (!token) {
+          token = await refreshRequest();
+        }
+        let response = await fetch(`/api/order/toCart`, {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({ userId: user.userId, itemId: bookItemId, quantity: quantities[bookItemId] })
+        });
+        if (response.status === 401) {                                       
+          token = await refreshRequest();
+          response = await fetch(`/api/order/toCart`, {
+            method: "POST",
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ userId: user.userId, itemId: bookItemId, quantity: quantities[bookItemId] })
+          });                  
+        }
 
-      const data = await response.json();
-      if (response.ok) {
-        setOrderMessage(`✅ item added to cart: ${quantities[bookItemId]}`);
-        setItems((prevItems) =>
-          prevItems.map(item =>
-            item._id === bookItemId ? { ...item, stock: item.stock - quantities[bookItemId] } : item
-          )
-        );
+        const data = await response.json();
+        if (response.ok) {
+          setOrderMessage(`✅ item added to cart: ${quantities[bookItemId]}`);
+          setItems((prevItems) =>
+            prevItems.map(item =>
+              item._id === bookItemId ? { ...item, stock: item.stock - quantities[bookItemId] } : item
+            )
+          );
 
-        setQuantities((prev)=>({...prev,[bookItemId]:1}))
-        setBookItemId(null);
+          setQuantities((prev)=>({...prev,[bookItemId]:1}))
+          setBookItemId(null);
 
-        setTimeout(()=>{
-          setOrderMessage(null)
-        },3000)
+          setTimeout(()=>{
+            setOrderMessage(null)
+          },3000)
 
-        
-      } else {
-        setOrderMessage(`❌ ${data.message}`);
+          
+        } else {
+          setOrderMessage(`❌ ${data.message}`);
+          setTimeout(()=>{
+            setOrderMessage(null)
+          },3000)
+        }
+      } catch (error) {
+        setOrderMessage("❌ Error placing order");
         setTimeout(()=>{
           setOrderMessage(null)
         },3000)
       }
-    } catch (error) {
-      setOrderMessage("❌ Error placing order");
-      setTimeout(()=>{
-        setOrderMessage(null)
-      },3000)
     }
-  }
   };
 
   const scroll=(id)=>{
