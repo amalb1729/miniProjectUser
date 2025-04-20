@@ -50,9 +50,34 @@
     padding: 20px;
     margin-top: 30px;
     border-radius: 8px;
+    overflow: hidden; /* Ensure content doesn't spill out */
   }
   
   .announcements h2 {
     margin-bottom: 10px;
+  }
+  
+  /* Running Announcement Styles */
+  .announcement-ticker {
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    padding: 8px 0;
+  }
+  
+  .announcement-text {
+    display: inline-block;
+    animation: ticker-move 20s linear infinite;
+    padding-right: 50px; /* Space between repeated text */
+    font-weight: 500;
+  }
+  
+  @keyframes ticker-move {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
   }
   
