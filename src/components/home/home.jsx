@@ -40,7 +40,23 @@ function Home(){
                     <p>Your one-stop platform for booking academic materials and printing services.</p>
                 </section>
 
-                {/* Features Section */}
+                {/* Announcements Section */}
+                <section className="announcements">
+                    <h2>📢 Latest Announcements</h2>
+                    {loading ? (
+                        <p>Loading announcements...</p>
+                    ) : error ? (
+                        <p>{error}</p>
+                    ) : (
+                        <div className="announcement-ticker">
+                            <div className="announcement-text">
+                                🔹 {announcementText}
+                            </div>
+                        </div>
+                    )}
+                </section>
+
+                     {/* Features Section */}
                 <section className="features">
                     <h2>What We Offer</h2>
                     <div className="features-grid">
@@ -58,23 +74,7 @@ function Home(){
                     </div>
                     </div>
                 </section>
-
-                {/* Announcements Section */}
-                <section className="announcements">
-                    <h2>📢 Latest Announcements</h2>
-                    {loading ? (
-                        <p>Loading announcements...</p>
-                    ) : error ? (
-                        <p>{error}</p>
-                    ) : (
-                        <div className="announcement-ticker">
-                            <div className="announcement-text">
-                                🔹 {announcementText}
-                            </div>
-                        </div>
-                    )}
-                </section>
-
+                
                 </div>
             );
     
