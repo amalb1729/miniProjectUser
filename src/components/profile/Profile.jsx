@@ -102,6 +102,7 @@ function Profile() {
                         <thead>
                             <tr>
                                 <th>Items</th>
+                                <th>Ordered At</th>
                                 <th>Status</th>
                                 <th>Total</th>
                                 <th>Show</th>
@@ -112,8 +113,15 @@ function Profile() {
                                 if (order)
                                     return (
                                         <tr key={order._id}>
-                                            <td>{order.orderedItems.map((item) => item.itemName).join(", ")}</td>
-                                            <td>{order.status}</td>
+                                            <td>
+                                              <div className="item-names">
+                                                {order.orderedItems.map((item) => item.itemName).join(", ")}
+                                              </div>
+                                            </td>
+                                            <td>{new Date(order.orderedAt).toLocaleString()}</td>
+                                            <td>
+                                              <span className={`status ${order.status}`}>{order.status}</span>
+                                            </td>
                                             <td>{order.orderedItems.reduce((total, item) => total + item.itemPrice * item.itemQuantity, 0)}</td>
                                             <td><button className="orderBtn" onClick={() => { showModalFN(order._id, order.status) }}>Show</button></td>
                                         </tr>
@@ -122,6 +130,7 @@ function Profile() {
                                     return (
                                         <tr key={index}>
                                             <td>{"Items not found"}</td>
+                                            <td>{"Ordered At"}</td>
                                             <td>{"Status"}</td>
                                             <td>{"Total"}</td>
                                             <td>{"Show"}</td>
@@ -146,6 +155,7 @@ function Profile() {
                         <thead>
                             <tr>
                                 <th>Items</th>
+                                <th>Ordered At</th>
                                 <th>Status</th>
                                 <th>Total</th>
                                 <th>Show</th>
@@ -156,8 +166,15 @@ function Profile() {
                                 if (order)
                                     return (
                                         <tr key={order._id}>
-                                            <td>{order.orderedItems.map((item) => item.itemName).join(", ")}</td>
-                                            <td>{order.status}</td>
+                                            <td>
+                                              <div className="item-names">
+                                                {order.orderedItems.map((item) => item.itemName).join(", ")}
+                                              </div>
+                                            </td>
+                                            <td>{new Date(order.orderedAt).toLocaleString()}</td>
+                                            <td>
+                                              <span className={`status ${order.status}`}>{order.status}</span>
+                                            </td>
                                             <td>{order.orderedItems.reduce((total, item) => total + item.itemPrice * item.itemQuantity, 0)}</td>
                                             <td><button className="orderBtn" onClick={() => { showModalFN(order._id, order.status) }}>Show</button></td>
                                         </tr>
@@ -166,6 +183,7 @@ function Profile() {
                                     return (
                                         <tr key={index}>
                                             <td>{"Items not found"}</td>
+                                            <td>{"Ordered At"}</td>
                                             <td>{"Status"}</td>
                                             <td>{"Total"}</td>
                                             <td>{"Show"}</td>
