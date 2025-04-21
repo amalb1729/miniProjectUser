@@ -109,7 +109,7 @@ function Profile() {
                             </tr>
                         </thead>
                         <tbody>
-                            {pendingOrders.map((order, index) => {
+                            {pendingOrders?.map((order, index) => {
                                 if (order)
                                     return (
                                         <tr key={order._id}>
@@ -162,7 +162,7 @@ function Profile() {
                             </tr>
                         </thead>
                         <tbody>
-                            {completedOrders.map((order, index) => {
+                            {completedOrders?.map((order, index) => {
                                 if (order)
                                     return (
                                         <tr key={order._id}>
