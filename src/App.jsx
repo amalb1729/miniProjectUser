@@ -1,4 +1,3 @@
-
 import Header from "./components/header/Header"
 import Footer from "./components/footer/Footer"
 import Test from "./test"
@@ -30,6 +29,12 @@ function App() {
     });
 
     if (!res.ok) {
+        setLoginOpen(true); // Show login modal
+        setLoggedIn(false); // Force logout
+        setAccessToken("");
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('userInfo');
+        alert("Session expired, login again");
         throw new Error("Session expired");
     }
 
