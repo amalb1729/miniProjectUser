@@ -9,6 +9,8 @@ function Cart() {
     const [message, setMessage] = useState(""); // For showing the checkout message
     const [fade, setFade] = useState(false); // For animation effect
     const [liveStock, setLiveStock] = useState({}); // Stores real-time stock
+    const [checkoutEnabled, setCheckoutEnabled] = useState(true); // Track if checkout is enabled
+    const [checkingOut, setCheckingOut] = useState(false); // Track checkout process state
 
     useEffect(() => {
         const fetchCart = async (token = accessToken) => {
@@ -38,8 +40,39 @@ function Cart() {
         if (user && user.userId) {
             fetchCart();
             fetchLiveStock();
+            fetchCheckoutStatus(); // Check if checkout is enabled when component loads
         }
     }, []);
+
+    // Function to fetch checkout status from server
+    const fetchCheckoutStatus = async () => {
+        try {
+            let token = accessToken;
+            if (!token) {
+                token = await refreshRequest();
+            }
+            
+            let response = await fetch("/api/order/checkout-status",{
+                method:"GET",
+                headers:{"Authorization":`Bearer ${token}`}});
+            
+            if (response.status === 401) {
+                token = await refreshRequest();
+                response = await fetch("/api/order/checkout-status",{
+                    method:"GET",
+                    headers:{"Authorization":`Bearer ${token}`}});
+            }
+            
+            if (response.ok) {
+                const data = await response.json();
+                setCheckoutEnabled(data.checkoutEnabled);
+            }
+        } catch (error) {
+            console.error("Error checking checkout status:", error);
+            // Default to disabled if there's an error
+            setCheckoutEnabled(false);
+        }
+    };
 
     const fetchLiveStock = async (token=accessToken) => {
         try {
@@ -141,6 +174,19 @@ function Cart() {
 
     const checkoutCart = async (token = accessToken) => {
     try {
+        setCheckingOut(true);
+        
+        // Check if checkout is enabled before proceeding
+        await fetchCheckoutStatus();
+        
+        if (!checkoutEnabled) {
+            setMessage("Checkout is currently disabled by the administrator. Please try again later.");
+            setFade(true);
+            setTimeout(() => setFade(false), 3000);
+            setCheckingOut(false);
+            return; // Return early without modifying the cart
+        }
+        
         await saveCart(false, token);
         if (!token) {
             token = await refreshRequest();
@@ -164,16 +210,36 @@ function Cart() {
                 },
                 body: JSON.stringify({ myCart }),
             });
+        } else if (response.status === 403) {
+            // Handle case where checkout is disabled
+            const data = await response.json();
+            setMessage(data.message || "Checkout is currently disabled by the administrator.");
+            setFade(true);
+            setTimeout(() => setFade(false), 3000);
+            setCheckingOut(false);
+            return; // Return early without modifying the cart
         }
+        
         const data = await response.json();
-        console.log(data)
-        setMyCart(data.updatedCart?.userCart || null );
+        console.log(data);
+        
+        // Only update the cart if we have a valid response with updatedCart
+        if (data.updatedCart) {
+            setMyCart(data.updatedCart.userCart || []);
+        }
+        
         fetchLiveStock();
         setMessage(data.message);
         setFade(true); // Start fade-in effect
         setTimeout(() => setFade(false), 3000); // Remove after 3 seconds
     } catch (error) {
         console.log(error);
+        setMessage("An error occurred during checkout. Please try again.");
+        setFade(true);
+        setTimeout(() => setFade(false), 3000);
+        // Don't modify the cart on error
+    } finally {
+        setCheckingOut(false);
     }
 };
 
@@ -236,7 +302,14 @@ function Cart() {
                     </h3>
 
                     <div className="cart-actions">
-                        <button className="checkout-btn" onClick={()=>{checkoutCart()}}>Proceed to Checkout</button>
+                        <button 
+                            className={`checkout-btn ${!checkoutEnabled ? 'disabled' : ''}`} 
+                            onClick={checkoutCart}
+                            disabled={!checkoutEnabled || checkingOut}
+                            title={!checkoutEnabled ? "Checkout is currently disabled by the administrator" : checkingOut ? "Processing your order..." : "Proceed to checkout"}
+                        >
+                            {checkingOut ? "Processing..." : checkoutEnabled ? "Proceed to Checkout" : "Checkout Disabled"}
+                        </button>
                         <button className="save-btn" onClick={()=>{saveCart(true)}}>Save Cart</button>
                     </div>
                 </div>
