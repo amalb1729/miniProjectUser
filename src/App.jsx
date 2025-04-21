@@ -8,7 +8,7 @@ import Profile from "./components/profile/Profile"
 import Home from "./components/home/home"
 import { BrowserRouter as Router, Routes, Route,Navigate} from "react-router-dom";
 import { createContext } from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Loginmodal from "./components/modal/loginmodal"
 import Signupmodal from "./components/modal/signupmodal"
 import Cart from "./components/cart/Cart"
@@ -40,6 +40,10 @@ function App() {
     return tokenString;
   };
 
+  const [isLoggedIn, setLoggedIn] = useState(() => {
+    return sessionStorage.getItem('isLoggedIn') === 'true';
+  });
+
   useEffect(() => {
     const handleBeforeUnload = (e) => {
       if (isLoggedIn) {
@@ -63,10 +67,6 @@ function App() {
   
   //const [isLoggedIn,setLoggedIn]=useState(false)
   //const [user, setUser] = useState(null);
-  
-  const [isLoggedIn, setLoggedIn] = useState(() => {
-    return sessionStorage.getItem('isLoggedIn') === 'true';
-  });
   
   const [user, setUser] = useState(() => {
     const savedUser = sessionStorage.getItem('userInfo');
