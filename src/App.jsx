@@ -49,26 +49,6 @@ function App() {
     return sessionStorage.getItem('isLoggedIn') === 'true';
   });
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (isLoggedIn) {
-        // Fire and forget: browser may cancel this, but it will attempt
-        fetch('/api/auth/logout', {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [isLoggedIn]);
   
   //const [isLoggedIn,setLoggedIn]=useState(false)
   //const [user, setUser] = useState(null);
