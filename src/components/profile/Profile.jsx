@@ -2,7 +2,7 @@ import { useContext, useEffect,useState } from "react";
 import { myContext } from "../../App";
 import "./profile.css";
 import FullOrderModal from "../modal/fullOrderModal";
-import ImageUploader from "./imageUploader"
+import ImageUploader from "./imageuploader"
 import { IKImage } from 'imagekitio-react';
 import QRGenerator from "./QRGenerator";
 function Profile() {

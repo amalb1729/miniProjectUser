@@ -135,7 +135,7 @@ function ImageUploader({user,setUser}){
                         urlEndpoint={import.meta.env.VITE_PUBLIC_URL_ENDPOINT} 
                         onError={(e) => (e.target.src = "https://placehold.co/100")} 
                         className="profile-image"
-                        alt="Profile Picture"
+                        alt=""
                     />
                     
                     <div className="upload-container" ref={ikUploadRef}>
