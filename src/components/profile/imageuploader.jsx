@@ -72,6 +72,7 @@ function ImageUploader({user,setUser}){
         const data = await response.json();
         console.log(data);
         setUrl(data.url);
+        setUser(prevUser => ({ ...prevUser, url: data.url }));
         setImageKey(Date.now());
         // Reset progress after a delay
         setTimeout(() => {
