@@ -312,6 +312,10 @@
   text-overflow: ellipsis;
 }
 
+.status-Cancelled {
+  color: red;
+}
+
 /* Responsive styling */
 @media (max-width: 768px) {
   .profile {

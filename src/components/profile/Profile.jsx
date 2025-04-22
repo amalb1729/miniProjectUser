@@ -173,7 +173,7 @@ function Profile() {
                                             </td>
                                             <td>{new Date(order.orderedAt).toLocaleString()}</td>
                                             <td>
-                                              <span className={`status ${order.status}`}>{order.status}</span>
+                                              <span className={`status-${order.status}`}>{order.status}</span>
                                             </td>
                                             <td>{order.orderedItems.reduce((total, item) => total + item.itemPrice * item.itemQuantity, 0)}</td>
                                             <td><button className="orderBtn" onClick={() => { showModalFN(order._id, order.status) }}>Show</button></td>
