@@ -15,8 +15,7 @@ This is the user-facing storefront for the Student Store application. It allows 
 
 *   **Framework**: React
 *   **Routing**: React Router
-*   **State Management**: Context API or Redux (can be specified)
-*   **API Communication**: Axios
+*   **API Communication**: Fetch API
 
 ## Prerequisites
 
